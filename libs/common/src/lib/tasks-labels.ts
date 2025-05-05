@@ -187,6 +187,14 @@ export const TasksLabels = {
       meedan_category:'Category',
       email_address: 'Email Address',
       upload_file: 'Upload Files',
+    },
+    "es-hn": {
+      rating_justification: 'Veracidad del Contenido',
+      evidences_and_references: 'Evidencia y Referencias',
+      violation_type: 'Tipo de Contenido',
+      meedan_category:'Categoría',
+      email_address: 'AUTOMÁTICO - Email del usuario',
+      upload_file: 'AUTOMÁTICO - Subir archivos',
     }
 }
 
