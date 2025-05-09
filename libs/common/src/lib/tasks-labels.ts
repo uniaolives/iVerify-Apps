@@ -224,7 +224,7 @@ export const TasksLabels = {
     category_checked: 'Categoría',
     audio_url: 'AUTOMÁTICO - Enlace URL de audio',
     message: 'AUTOMÁTICO - Mensaje',
-    original_reported_date: 'Fecha Original de Reporte',
+    original_reported_date: 'AUTOMÁTICO - Fecha de Transmisión del Contenido',
   },
 };
 
