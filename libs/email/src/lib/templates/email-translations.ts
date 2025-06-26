@@ -12,6 +12,18 @@ export const EmailTranslations = {
     "We inform you that the content you reported or followed has been fact-checked. You can view the results of our analysis by following the link below:",
     thanksSubmit: "We thank you for your commitment to verifying information and encourage you to share these results with your social media contacts to help disseminate reliable information."
   },
+  es: {
+    greeting: 'Hola,',
+    intro: 'Gracias por suscribirte a nuestro servicio de notificaciones para seguir las últimas verificaciones realizadas por el equipo de iVerify.',
+    todayFactCheck: 'Aquí están los contenidos que fueron verificados hoy:',
+    thanks: 'Agradecemos tu compromiso en la lucha contra la desinformación y te invitamos a compartir estos resultados en tus redes sociales para contribuir a la difusión de información confiable.',
+    regards: 'Saludos cordiales,',
+    team: 'El equipo de verificación de hechos de iVerify',
+    learnMore: 'Saber más...',
+    introSubmit: 'Recientemente te suscribiste a nuestro servicio de notificaciones para ser informado cada vez que el equipo de iVerify verifique un contenido.',
+    factCheckedNotification: 'Te informamos que el contenido que reportaste o seguiste ha sido verificado. Puedes ver los resultados de nuestro análisis en el siguiente enlace:',
+    thanksSubmit: 'Agradecemos tu compromiso con la verificación de la información y te animamos a compartir estos resultados con tus contactos en redes sociales para ayudar a difundir información confiable.'
+  },
   fr: {
     greeting: 'Bonjour,',
     intro: "Merci de vous être abonné à notre service de notifications pour suivre les dernières vérifications effectuées par l’équipe iVerify.",
@@ -25,4 +37,6 @@ export const EmailTranslations = {
     "Nous vous informons que le contenu que vous aviez signalé ou suivi a été fact-checké. Vous pouvez consulter les résultats de notre analyse en suivant le lien ci-dessous :",
     thanksSubmit: "Nous vous remercions pour votre engagement envers la vérification des informations et vous encourageons à partager ces résultats avec vos contacts sur les réseaux sociaux afin de contribuer à la diffusion d'informations fiables."
   },
+
+
 }
