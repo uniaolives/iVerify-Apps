@@ -149,9 +149,6 @@ export class CheckClientHelperService {
               }
             }
           }
-          project {
-            id
-          }
         }
       }`;
 
