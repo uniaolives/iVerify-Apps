@@ -19,6 +19,7 @@ class NeuroVizWidget(QOpenGLWidget):
         self.phase = 0.0
         self.coherence = 0.5
         self.flash_intensity = 0.0
+        self.yuga_state = "Satya"
 
         # Timer de atualização
         self.timer = QTimer()
@@ -34,6 +35,7 @@ class NeuroVizWidget(QOpenGLWidget):
         if metrics_dict is None:
             metrics_dict = kwargs
         self.coherence = metrics_dict.get('coherence', 0.5)
+        self.yuga_state = metrics_dict.get('yuga', 'Satya')
         self.generate_geometry()
 
     def get_state(self):
@@ -75,13 +77,21 @@ class NeuroVizWidget(QOpenGLWidget):
     def paintGL(self):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
+        # Yuga-based background color
+        if self.yuga_state == "Satya": bg = (0.0, 0.0, 0.2)
+        elif self.yuga_state == "Treta": bg = (0.0, 0.1, 0.1)
+        elif self.yuga_state == "Dvapara": bg = (0.1, 0.1, 0.0)
+        else: bg = (0.2, 0.0, 0.0) # Kali
+
         # Apply Flash Effect
         if self.flash_intensity > 0:
             glClearColor(self.flash_intensity, self.flash_intensity, self.flash_intensity, 1.0)
             self.flash_intensity *= 0.9 # Decay
             if self.flash_intensity < 0.01:
                 self.flash_intensity = 0.0
-                glClearColor(0.0, 0.0, 0.1, 1.0) # Back to normal blue
+                glClearColor(*bg, 1.0)
+        else:
+            glClearColor(*bg, 1.0)
 
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()

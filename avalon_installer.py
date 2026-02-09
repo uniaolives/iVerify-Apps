@@ -17,22 +17,7 @@ def setup_avalon():
     for subdir in subdirs:
         os.makedirs(os.path.join(base_dir, subdir), exist_ok=True)
 
-    # Map existing files to Avalon components (if they exist)
-    mapping = {
-        "qvpn/implementations/qvpn_core.py": "project_avalon/avalon_kernel.py",
-        "qvpn/implementations/ricci_flow_audio.py": "project_avalon/components/audio_synthesizer.py",
-        "qvpn/implementations/topological_healing.py": "project_avalon/components/topology_engine.py",
-        "qvpn/implementations/topological_signature_detector.py": "project_avalon/components/signature_detector.py",
-        "qvpn/implementations/harmonic_signature_shield.py": "project_avalon/components/harmonic_shield.py",
-    }
-
-    print("Checking for source files in qvpn/...")
-    for src, dst in mapping.items():
-        if os.path.exists(src):
-            shutil.copy(src, dst)
-            print(f"  -> Copied {src} to {dst}")
-        else:
-            print(f"  -> Warning: {src} not found.")
+    print("Project structure already exists. Ensuring session data and config...")
 
     # Create a basic config
     config_content = """{

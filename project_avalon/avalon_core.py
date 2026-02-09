@@ -13,6 +13,10 @@ import os
 # Add project root to path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+from project_avalon.quantum.grover_neural_search import GroverNeuralSearch, NeuralPattern
+from project_avalon.sensors.bioelectric_impedance import BioelectricImpedanceSensor
+from project_avalon.philosophy.arkhe_core import ArkheCore, ArkhePreservationProtocol
+
 @dataclass
 class EEGMetrics:
     alpha: float = 0.0
@@ -42,17 +46,29 @@ class EEGMetrics:
         # Normalizar para 0-1 (ln(4) ≈ 1.386)
         return float(np.clip(entropy / 1.386, 0, 1))
 
-class AvalonCore:
+class AvalonKalkiSystem:
     """
-    Núcleo do sistema Avalon - Integra tudo em um só lugar
-    Versão mínima e funcional
+    Núcleo do sistema Avalon v2.0 com Protocolo Kalki (SOC) e ASI (Artificial Substrate Intelligence)
     """
 
     def __init__(self):
         self.is_running = False
         self.metrics = EEGMetrics()
         self.session_data = []
+        self.metrics_history = []
         self.start_time = None
+
+        # ASI & Arkhe Components
+        self.grover_search = GroverNeuralSearch(backend='classical')
+        self.impedance_sensor = BioelectricImpedanceSensor()
+        self.user_arkhe = ArkheCore.generate_from_identity("default_user")
+        self.arkhe_preservation = ArkhePreservationProtocol(self.user_arkhe)
+
+        # Kalki SOC (Self-Organized Criticality) Model
+        self.soc_grid = np.zeros((20, 20)) # Pile of sand grains (neural stress)
+        self.soc_threshold = 4
+        self.yuga_state = "Satya" # Satya, Treta, Dvapara, Kali
+        self.malleability_score = 0.5
 
         # Sistema de módulos
         self.modules = {
@@ -123,36 +139,53 @@ class AvalonCore:
             return False
 
     def start_session(self, protocol_name: str = "flow", duration: int = 60):
-        """Inicia uma sessão completa"""
-        print(f"\n🎯 Iniciando sessão: {protocol_name} ({duration}s)")
-        print("=" * 50)
+        """Inicia uma sessão completa com busca quântica Grover"""
+        print(f"\n🚀 INICIANDO SESSÃO ASI: {protocol_name} ({duration}s)")
+        print(f"   Princípio: 1A × 2B = 45E | Speedup Quântico: {self.grover_search.find_closest_ideal({})['quantum_speedup']:.1f}x")
+        print("=" * 60)
 
         self.is_running = True
         self.start_time = time.time()
         self.session_data = []
+        self.metrics_history = []
 
         # Configurar protocolo
-        protocol = self.modules['protocol'].get_protocol(protocol_name)
+        protocol_obj = self.modules['protocol'].get_protocol(protocol_name)
 
         # Loop principal
         try:
+            last_quantum_search = 0
             while self.is_running and (time.time() - self.start_time) < duration:
+                current_time = time.time()
+
                 # 1. Coletar dados
                 metrics_raw = self._collect_data()
 
-                # 2. Processar com protocolo
-                feedback = protocol.process(metrics_raw)
+                # 2. Busca Quântica Periódica (a cada 5s)
+                if current_time - last_quantum_search > 5.0:
+                    quantum_result = self.grover_search.find_closest_ideal({
+                        'coherence': metrics_raw.coherence,
+                        'entropy': metrics_raw.calculate_entropy(),
+                        'alpha': metrics_raw.alpha,
+                        'beta': metrics_raw.beta
+                    })
+                    print(f"\n⚛️ [GROVER SEARCH] Padrão Ideal Detectado (Prob: {quantum_result['search_result']['probability']:.1%})")
+                    last_quantum_search = current_time
 
-                # 3. Aplicar feedback
+                # 3. Processar com protocolo
+                feedback = protocol_obj.process(metrics_raw)
+
+                # 4. Aplicar feedback
                 self._apply_feedback(feedback, metrics_raw)
 
-                # 4. Verificar Protocolo de Reset Kalki
+                # 5. Verificar Protocolo de Reset Kalki (ASI-enhanced)
                 self.kalki_reset_protocol(metrics_raw)
 
-                # 5. Logging
+                # 6. Logging
                 self._log_frame(metrics_raw, feedback)
+                self.metrics_history.append({'metrics': metrics_raw.__dict__})
 
-                # 6. Pequena pausa
+                # 7. Pequena pausa
                 time.sleep(0.05)  # 20Hz
 
         except KeyboardInterrupt:
@@ -216,40 +249,78 @@ class AvalonCore:
                   f"Foco: {metrics.focus_score:.2f} | "
                   f"Calma: {metrics.calm_score:.2f}")
 
+    def update_soc_model(self, metrics: EEGMetrics):
+        """Atualiza o modelo de Pilha de Areia (SOC) com o estresse neural"""
+        # Adiciona 'grãos' de estresse baseados na entropia
+        entropy = metrics.calculate_entropy()
+        num_grains = int(entropy * 5)
+        for _ in range(num_grains):
+            x, y = np.random.randint(0, 20, 2)
+            self.soc_grid[x, y] += 1
+
+        # Toppling (Avalanches)
+        while np.any(self.soc_grid >= self.soc_threshold):
+            x, y = np.where(self.soc_grid >= self.soc_threshold)
+            for i, j in zip(x, y):
+                self.soc_grid[i, j] -= 4
+                if i > 0: self.soc_grid[i-1, j] += 1
+                if i < 19: self.soc_grid[i+1, j] += 1
+                if j > 0: self.soc_grid[i, j-1] += 1
+                if j < 19: self.soc_grid[i, j+1] += 1
+
+        # Yuga Detection based on grid mass
+        total_mass = np.sum(self.soc_grid)
+        if total_mass < 200: self.yuga_state = "Satya"
+        elif total_mass < 500: self.yuga_state = "Treta"
+        elif total_mass < 800: self.yuga_state = "Dvapara"
+        else: self.yuga_state = "Kali"
+
     def kalki_reset_protocol(self, metrics: EEGMetrics):
         """
-        Protocolo de Segurança: RESET KALKI
-        Finalidade: Interromper loops de feedback de ansiedade e forçar
-        uma transição de fase para repouso profundo.
+        Protocolo de Segurança KALKI v2.0
+        Finalidade: Interromper a criticalidade auto-organizada destrutiva.
         """
+        self.update_soc_model(metrics)
         entropy = metrics.calculate_entropy()
         coherence = metrics.coherence
 
-        # Condição de Gatilho: Alta Entropia (> 0.85) + Baixa Coerência (< 0.2)
-        if entropy > 0.85 and coherence < 0.2:
-            print("\n🚨 [KALKI RESET] Singularidade Detectada: Kali Yuga Neural")
+        # ASI enhancement: Check substrate malleability
+        substrate_info = self.impedance_sensor.measure_substrate_malleability(entropy, coherence)
+        self.malleability_score = substrate_info['malleability_score']
+
+        # Trigger Condition: Kali Yuga State OR Extreme Entropy/Rigidity
+        if self.yuga_state == "Kali" or (entropy > 0.9 and coherence < 0.1) or self.malleability_score < 0.2:
+            print(f"\n🚨 [KALKI RESET v2.0] Criticalidade SOC: {self.yuga_state} Yuga detectado")
             self.execute_kalki_strike()
 
     def execute_kalki_strike(self):
-        """A 'Espada' que corta o ruído e o 'Cavalo' que guia ao Satya."""
-
-        # 1. A ESPADA: Corte súbito via Áudio e Visual
+        """A 'Espada' (Pattern Interruption), o 'Cavalo' (Solfeggio) e o 'Satya' (Schumann)."""
+        print("⚔️  A ESPADA: Interrupção súbita de frequências dissonantes")
         if self.modules['audio']:
-            # Sharp tone to clear the buffer
-            self.modules['audio'].set_frequency(880)
-            time.sleep(0.2)
-            # Transition to Schumann Resonance (7.83Hz simulated in audio engine)
+            self.modules['audio'].set_frequency(880) # O 'Grito' de Kalki
+        if self.modules['visual']:
+            try: self.modules['visual'].trigger_kalki_flash()
+            except: pass
+        time.sleep(0.5)
+
+        print("🌀 O CAVALO BRANCO: Indução de Frequências Solfeggio para Cura")
+        solfeggio = [174, 285, 396, 417, 528, 639, 741, 852]
+        for freq in solfeggio:
+            if self.modules['audio']:
+                self.modules['audio'].set_frequency(freq)
+            time.sleep(0.2) # Rapid sweep
+
+        print("⚖️  SATYA YUGA: Reestabelecendo Dharma (Ressonância de Schumann 7.83Hz)")
+        if self.modules['audio']:
             self.modules['audio'].set_frequency(7.83)
 
-        if self.modules['visual']:
-            try:
-                # Trigger flash and geometry reset
-                self.modules['visual'].trigger_kalki_flash()
-            except:
-                pass
+        # Arkhe preservation check
+        result = self.arkhe_preservation.execute_safe_reset(intensity=0.8)
+        print(f"   [ARKHE] Integridade de Identidade: {result['status']} ({result['integrity']:.2f})")
 
-        print("🌀 Reestabelecendo Dharma: Sincronizando com Ressonância de Schumann (7.83Hz)")
-        time.sleep(1.0) # Integration pause
+        # Reset SOC Grid
+        self.soc_grid = np.zeros((20, 20))
+        time.sleep(1.0)
 
     def stop_session(self):
         """Para a sessão atual"""
@@ -307,17 +378,20 @@ class AvalonCore:
         print(f"📊 Relatório JSON salvo em: {json_filename}")
         return report
 
+# Global Alias
+AvalonCore = AvalonKalkiSystem
+
 def main():
     """Função principal (CLI)"""
     print("""
     ╔══════════════════════════════════════╗
     ║        AVALON NEUROFEEDBACK         ║
-    ║     Sistema Prático v1.0           ║
+    ║     Sistema Prático v2.0 (ASI)     ║
     ║     Princípio: 1A × 2B = 45E      ║
     ╚══════════════════════════════════════╝
     """)
 
-    system = AvalonCore()
+    system = AvalonKalkiSystem()
     system.bootstrap()
 
     # Menu interativo
@@ -346,3 +420,6 @@ def main():
                 print(f"   {status} {name}")
         elif choice == '5':
             break
+
+if __name__ == "__main__":
+    main()

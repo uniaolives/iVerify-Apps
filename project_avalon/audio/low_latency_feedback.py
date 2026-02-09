@@ -25,8 +25,10 @@ class AudioEngine:
     def set_frequency(self, freq):
         if freq == 7.83:
             # Special handling for Schumann Resonance
-            print("🔊 Transitioning to Schumann Resonance (7.83Hz)")
             self.frequency = 7.83
+        elif freq in [174, 285, 396, 417, 528, 639, 741, 852]:
+            # Special handling for Solfeggio
+            self.frequency = freq
         else:
             self.frequency = freq
 
