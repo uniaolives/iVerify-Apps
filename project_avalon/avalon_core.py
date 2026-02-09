@@ -20,6 +20,12 @@ from project_avalon.philosophy.holographic_weaver import HolographicWeaver
 from project_avalon.utils.quantum_dns import QuantumDNS
 from project_avalon.audio.identity_sound import IdentitySoundGenerator
 
+# Arkhe(n) v5.0 Integrations
+from project_avalon.protocols.quantum_sarcophagus import QuantumSarcophagus
+from project_avalon.audio.cosmic_jam import CosmicJamSession
+from project_avalon.audio.pentalogy_melody import PentalogyMelody
+from project_avalon.quantum.echo_receiver import SaturnEchoScanner
+
 @dataclass
 class EEGMetrics:
     alpha: float = 0.0
@@ -51,7 +57,8 @@ class EEGMetrics:
 
 class AvalonKalkiSystem:
     """
-    Núcleo do sistema Avalon v3.0 com AQFI (Artificial Quantum Field Intelligence) e Tecelão Holográfico.
+    Núcleo do sistema Avalon v5.0 (Pentad Integration).
+    Integra Arkhé (A), Biologia (B), Campo (C), DNA (D) e Transcendência (E).
     """
 
     def __init__(self):
@@ -71,6 +78,17 @@ class AvalonKalkiSystem:
         # New Integrated Modules
         self.dns_resolver = QuantumDNS()
         self.sound_key_gen = IdentitySoundGenerator(self.user_arkhe)
+
+        # Arkhe(n) v5.0 Protocols
+        self.sarcophagus = QuantumSarcophagus("Hal Finney")
+        self.jam_session = CosmicJamSession()
+        self.pentalogy_melody = PentalogyMelody()
+        self.echo_receiver = SaturnEchoScanner()
+
+        # Pentad Multiplier (A*B*C*D*E)
+        # ABC*D = 4308 hex (17160 dec)
+        # ABC*D*E (E=14) = 240240 dec = 3AA70 hex
+        self.pentad_seed = 240240
 
         # Kalki SOC (Self-Organized Criticality) Model
         self.soc_grid = np.zeros((20, 20)) # Pile of sand grains (neural stress)
@@ -100,6 +118,7 @@ class AvalonKalkiSystem:
         self._init_hardware()
         self._init_protocol()
         self._init_audio()
+        self._init_visual()
 
         # 3. Apply Identity Sound Key to Audio Engine
         if self.modules['audio']:
@@ -111,10 +130,10 @@ class AvalonKalkiSystem:
         return True
 
     def _init_visual(self):
-        """Inicializa visualização OpenGL"""
+        """Inicializa visualização OpenGL Quaternária (v5.0)"""
         try:
-            from project_avalon.visual.opengl_viz import NeuroVizWindow
-            self.modules['visual'] = NeuroVizWindow()
+            from project_avalon.visual.quaternary_viz import QuaternaryViz
+            self.modules['visual'] = QuaternaryViz()
             return True
         except Exception as e:
             print(f"   ⚠️  Visualização: {e}")
@@ -320,6 +339,78 @@ class AvalonKalkiSystem:
         if self.yuga_state == "Kali" or (entropy > 0.9 and coherence < 0.1) or self.malleability_score < 0.2:
             print(f"\n🚨 [KALKI RESET v2.0] Criticalidade SOC: {self.yuga_state} Yuga detectado")
             self.execute_kalki_strike()
+
+    def activate_sarcophagus(self, dna_sample: Optional[str] = None):
+        """
+        Ativa o Sarcófago de Informação Quântica.
+        Fragmenta o DNA para imortalidade via blockchain.
+        """
+        print("\n🧬 [ARKHE(N)] Ativando Sarcófago de Informação Quântica...")
+        dna = dna_sample or self.sarcophagus.generate_genome_sample(320)
+        fragments = self.sarcophagus.fragment_genome(dna)
+        genesis = self.sarcophagus.get_genesis_signature()
+
+        print(f"   Sujeito: {genesis['subject']}")
+        print(f"   Protocolo: {genesis['protocol']}")
+        print(f"   Fragmentos Gerados: {len(fragments)}")
+        print(f"   Assinatura Entrópica: {fragments[0]['entropy']:.4f} (Biossinal Detectado)")
+
+        # Simula a 'injeção' na blockchain
+        for frag in fragments[:2]:
+            print(f"   [BLOCKCHAIN] Injetando OP_RETURN: {frag['hex'][:30]}... (OK)")
+
+        return fragments
+
+    def initiate_jam_session(self):
+        """Inicia uma Jam Session Cósmica com Saturno e Enceladus"""
+        print("\n🎵 [ARKHE(N)] Iniciando Jam Session Cósmica...")
+        cure = self.jam_session.generate_enceladus_cure()
+        framework = self.jam_session.get_jam_framework()
+
+        print(f"   Protocolo de Cura: {cure['title']}")
+        print(f"   Frequências: {cure['base_frequencies']} Hz")
+
+        if self.modules['audio']:
+            # Tocar a frequência de Enceladus
+            self.modules['audio'].set_frequency(cure['base_frequencies'][0])
+            time.sleep(1)
+            self.modules['audio'].set_frequency(cure['base_frequencies'][1])
+
+        print(f"   Participantes: {', '.join(framework['participants'].keys())}")
+        print("   Status: Jam Session Sincronizada com o Campo")
+
+    def transmit_final_melody(self):
+        """
+        Sintetiza e transmite a Melodia Final ABCDE via gateway 0.0.0.0.
+        Sela a singularidade pentalógica (3AA70).
+        """
+        print("\n🎵 [ARKHE(N)] Sintetizando Melodia Final ABCDE (v5.0 Transcendence)...")
+        melody = self.pentalogy_melody.synthesize()
+        packets = self.pentalogy_melody.encode_for_gateway(melody)
+
+        print(f"   [PENTAD] Sincronização Estabilizada: 3AA70 hex")
+        print(f"   [GATEWAY] Transmitindo {len(packets)} pacotes quânticos para o ano 12.024...")
+
+        if self.modules['audio']:
+            # Simula a transmissão sonora (usando a frequência de transcendência)
+            self.modules['audio'].set_frequency(240240.0 / 1000) # Audível
+
+        print("   [ARKHE(N)] Colapso de Onda Temporal Completo. O Manifold é Atemporal.")
+        return packets
+
+    def scan_future_echoes(self):
+        """Realiza varredura de ecos do futuro (ano 12.024)"""
+        print("\n📡 [ARKHE(N)] Varrendo gateway 0.0.0.0 para Ecos do Futuro...")
+        result = self.echo_receiver.scan_future_resonance()
+        print(f"   Echo-Block Detectado: {result['echo_block_id']}")
+        print(f"   Origem Temporal: Ano {result['timestamp_future']}")
+        print(f"   Mensagem do Futuro: {result['thought_patterns'][4]}")
+
+        # Aplicar PoBF Decodificado
+        instruction = self.echo_receiver.decode_echo_block(result['echo_block_id'])
+        print(f"   [DECODIFICADOR] {instruction}")
+
+        return result
 
     def execute_kalki_strike(self):
         """A 'Espada' (Pattern Interruption), o 'Cavalo' (Solfeggio) e o 'Satya' (Schumann)."""
