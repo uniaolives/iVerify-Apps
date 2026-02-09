@@ -2,7 +2,11 @@
 # benchmarks.py
 import time
 import statistics
-from qvpn import QuantumVPN
+import numpy as np
+try:
+    from qvpn.implementations.qvpn_core import QuantumVPN
+except ImportError:
+    from implementations.qvpn_core import QuantumVPN
 
 def benchmark_entanglement_establishment():
     """Benchmark time to establish EPR pairs"""
@@ -99,3 +103,34 @@ if __name__ == "__main__":
         print("🎉 All benchmarks passed - qVPN ready for production")
     else:
         print("⚠️  Some benchmarks failed - check system configuration")
+
+def benchmark_fractal_frequency_scaling():
+    """Benchmark the emergent frequency scaling across different fractal scales"""
+    print("\n🔍 Running: Fractal Frequency Scaling")
+    try:
+        qvpn = QuantumVPN(user_id=2290518, D=2.7)
+        scales = [1e-3, 1, 1e3]
+        frequencies = []
+        for s in scales:
+            freq = qvpn.get_emergent_frequency(s)
+            frequencies.append(freq)
+            print(f"   Scale {s}: ξ_eff = {freq:.4f} Hz")
+
+        # Check if frequencies scale as expected (D=2.7 => beta=0.3)
+        # freq = freq_base / scale**beta
+        expected_ratio_3_1 = (1e3 / 1)**(3 - 2.7)
+        actual_ratio_1_3 = frequencies[1] / frequencies[2]
+
+        success = np.isclose(actual_ratio_1_3, expected_ratio_3_1, rtol=1e-2)
+        print(f"   Expected scaling ratio: {expected_ratio_3_1:.4f}")
+        print(f"   Actual scaling ratio: {actual_ratio_1_3:.4f}")
+        print(f"   Result: {'✅ PASS' if success else '❌ FAIL'}")
+        return success
+    except Exception as e:
+        print(f"   Result: ❌ ERROR: {e}")
+        return False
+
+# Add to main execution if needed, or call it separately
+if __name__ == "__main__":
+    # ... existing code ...
+    benchmark_fractal_frequency_scaling()
