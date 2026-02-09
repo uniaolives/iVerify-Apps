@@ -23,7 +23,12 @@ class AudioEngine:
         print(f"Audio latency set to {self.latency}ms")
 
     def set_frequency(self, freq):
-        self.frequency = freq
+        if freq == 7.83:
+            # Special handling for Schumann Resonance
+            print("🔊 Transitioning to Schumann Resonance (7.83Hz)")
+            self.frequency = 7.83
+        else:
+            self.frequency = freq
 
     def get_state(self):
         return {'latency': self.latency}

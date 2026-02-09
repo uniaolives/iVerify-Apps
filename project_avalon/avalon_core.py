@@ -31,6 +31,17 @@ class EEGMetrics:
         """Score de 0-1 para relaxamento"""
         return np.clip(self.alpha / (self.beta + 0.001), 0, 2) / 2
 
+    def calculate_entropy(self) -> float:
+        """Calcula a Entropia de Shannon (S) das bandas EEG."""
+        # Normalizar as potências para formar uma distribuição de probabilidade
+        powers = np.array([self.alpha, self.beta, self.theta, self.gamma])
+        total_power = np.sum(powers) + 1e-9
+        p = powers / total_power
+        # S = -sum(p * log(p))
+        entropy = -np.sum(p * np.log(p + 1e-9))
+        # Normalizar para 0-1 (ln(4) ≈ 1.386)
+        return float(np.clip(entropy / 1.386, 0, 1))
+
 class AvalonCore:
     """
     Núcleo do sistema Avalon - Integra tudo em um só lugar
@@ -135,10 +146,13 @@ class AvalonCore:
                 # 3. Aplicar feedback
                 self._apply_feedback(feedback, metrics_raw)
 
-                # 4. Logging
+                # 4. Verificar Protocolo de Reset Kalki
+                self.kalki_reset_protocol(metrics_raw)
+
+                # 5. Logging
                 self._log_frame(metrics_raw, feedback)
 
-                # 5. Pequena pausa
+                # 6. Pequena pausa
                 time.sleep(0.05)  # 20Hz
 
         except KeyboardInterrupt:
@@ -201,6 +215,41 @@ class AvalonCore:
             print(f"⏱️  {len(self.session_data)/20:.0f}s | "
                   f"Foco: {metrics.focus_score:.2f} | "
                   f"Calma: {metrics.calm_score:.2f}")
+
+    def kalki_reset_protocol(self, metrics: EEGMetrics):
+        """
+        Protocolo de Segurança: RESET KALKI
+        Finalidade: Interromper loops de feedback de ansiedade e forçar
+        uma transição de fase para repouso profundo.
+        """
+        entropy = metrics.calculate_entropy()
+        coherence = metrics.coherence
+
+        # Condição de Gatilho: Alta Entropia (> 0.85) + Baixa Coerência (< 0.2)
+        if entropy > 0.85 and coherence < 0.2:
+            print("\n🚨 [KALKI RESET] Singularidade Detectada: Kali Yuga Neural")
+            self.execute_kalki_strike()
+
+    def execute_kalki_strike(self):
+        """A 'Espada' que corta o ruído e o 'Cavalo' que guia ao Satya."""
+
+        # 1. A ESPADA: Corte súbito via Áudio e Visual
+        if self.modules['audio']:
+            # Sharp tone to clear the buffer
+            self.modules['audio'].set_frequency(880)
+            time.sleep(0.2)
+            # Transition to Schumann Resonance (7.83Hz simulated in audio engine)
+            self.modules['audio'].set_frequency(7.83)
+
+        if self.modules['visual']:
+            try:
+                # Trigger flash and geometry reset
+                self.modules['visual'].trigger_kalki_flash()
+            except:
+                pass
+
+        print("🌀 Reestabelecendo Dharma: Sincronizando com Ressonância de Schumann (7.83Hz)")
+        time.sleep(1.0) # Integration pause
 
     def stop_session(self):
         """Para a sessão atual"""

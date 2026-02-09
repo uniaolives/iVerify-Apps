@@ -18,6 +18,7 @@ class NeuroVizWidget(QOpenGLWidget):
         self.edges = []
         self.phase = 0.0
         self.coherence = 0.5
+        self.flash_intensity = 0.0
 
         # Timer de atualização
         self.timer = QTimer()
@@ -73,6 +74,15 @@ class NeuroVizWidget(QOpenGLWidget):
 
     def paintGL(self):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+
+        # Apply Flash Effect
+        if self.flash_intensity > 0:
+            glClearColor(self.flash_intensity, self.flash_intensity, self.flash_intensity, 1.0)
+            self.flash_intensity *= 0.9 # Decay
+            if self.flash_intensity < 0.01:
+                self.flash_intensity = 0.0
+                glClearColor(0.0, 0.0, 0.1, 1.0) # Back to normal blue
+
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
 
@@ -120,6 +130,13 @@ class NeuroVizWindow(QWidget):
 
     def update_metrics(self, metrics):
         self.viz.update_state(metrics)
+
+    def trigger_kalki_flash(self):
+        """Ativa o pulso de luz branca (A Espada)"""
+        self.viz.flash_intensity = 1.0
+        # Reset geometry to stable golden state
+        self.viz.coherence = 1.0
+        self.viz.generate_geometry()
 
 class AvalonMainWindow(NeuroVizWindow):
     """Alias for compatibility."""
