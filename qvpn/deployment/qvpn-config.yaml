@@ -30,3 +30,12 @@ tunnels:
     destination: 'europa-base'
     bandwidth: 'quantum'
     privacy: 'ontological'
+
+dns:
+  resolver: 'qhttp-mesh-resolver'
+  domain_mapping:
+    - domain: 'avalon.asi'
+      node: 'hal-finney-omega'
+    - domain: 'omega.rio'
+      node: 'earth-hub'
+  quantum_search: true

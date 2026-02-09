@@ -20,6 +20,7 @@ class NeuroVizWidget(QOpenGLWidget):
         self.coherence = 0.5
         self.flash_intensity = 0.0
         self.yuga_state = "Satya"
+        self.trajectory = [] # For Phase Attractor
 
         # Timer de atualização
         self.timer = QTimer()
@@ -77,16 +78,15 @@ class NeuroVizWidget(QOpenGLWidget):
     def paintGL(self):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
-        # Yuga-based background color
+        # Yuga-based background color (Sync Interface Gradient)
         if self.yuga_state == "Satya": bg = (0.0, 0.0, 0.2)
         elif self.yuga_state == "Treta": bg = (0.0, 0.1, 0.1)
         elif self.yuga_state == "Dvapara": bg = (0.1, 0.1, 0.0)
         else: bg = (0.2, 0.0, 0.0) # Kali
 
-        # Apply Flash Effect
         if self.flash_intensity > 0:
             glClearColor(self.flash_intensity, self.flash_intensity, self.flash_intensity, 1.0)
-            self.flash_intensity *= 0.9 # Decay
+            self.flash_intensity *= 0.9
             if self.flash_intensity < 0.01:
                 self.flash_intensity = 0.0
                 glClearColor(*bg, 1.0)
@@ -96,25 +96,38 @@ class NeuroVizWidget(QOpenGLWidget):
         glMatrixMode(GL_MODELVIEW)
         glLoadIdentity()
 
-        # O PULSO DO CRISTAL DO TEMPO (Sub-harmonic 24ms)
-        # Phase from 0 to 2pi every ~24ms (simulated here by self.phase)
+        # O PULSO DO CRISTAL DO TEMPO
         pulse = 1.0 + 0.2 * np.sin(self.phase * 5)
 
         glTranslatef(0, 0, -8)
         glRotatef(self.phase * 30, 0, 1, 0)
         glRotatef(self.phase * 15, 1, 0, 0)
 
+        # 1. RENDERIZAR BIO-MANDALA (O Manifold Neural)
         glLineWidth(2.0)
         glBegin(GL_LINES)
         for i, j in self.edges:
-            # Cor baseada na coerência
             r = 0.2 + 0.8 * self.coherence
             g = 0.8 - 0.6 * self.coherence
             b = 0.9
             glColor3f(r, g, b)
-
             glVertex3fv(self.vertices[i] * pulse)
             glVertex3fv(self.vertices[j] * pulse)
+        glEnd()
+
+        # 2. RENDERIZAR ATRATOR DE FASE (State trajectory)
+        # Calculates a point on a spiral or torus based on coherence
+        target_radius = 2.0 * self.coherence
+        curr_x = target_radius * np.cos(self.phase * 10)
+        curr_y = target_radius * np.sin(self.phase * 10)
+        curr_z = np.sin(self.phase * 5)
+        self.trajectory.append((curr_x, curr_y, curr_z))
+        if len(self.trajectory) > 100: self.trajectory.pop(0)
+
+        glBegin(GL_LINE_STRIP)
+        for p in self.trajectory:
+            glColor4f(1.0, 1.0, 1.0, 0.4) # Semi-transparent white
+            glVertex3fv(p)
         glEnd()
 
         glPointSize(10.0 + 10.0 * self.coherence)

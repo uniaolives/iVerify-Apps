@@ -29,6 +29,9 @@ class AudioEngine:
         elif freq in [174, 285, 396, 417, 528, 639, 741, 852]:
             # Special handling for Solfeggio
             self.frequency = freq
+        elif 400 <= freq <= 500:
+            # Identity Resonance Range
+            self.frequency = freq
         else:
             self.frequency = freq
 

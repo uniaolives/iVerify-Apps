@@ -16,6 +16,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from project_avalon.quantum.grover_neural_search import GroverNeuralSearch, NeuralPattern
 from project_avalon.sensors.bioelectric_impedance import BioelectricImpedanceSensor
 from project_avalon.philosophy.arkhe_core import ArkheCore, ArkhePreservationProtocol
+from project_avalon.philosophy.holographic_weaver import HolographicWeaver
+from project_avalon.utils.quantum_dns import QuantumDNS
+from project_avalon.audio.identity_sound import IdentitySoundGenerator
 
 @dataclass
 class EEGMetrics:
@@ -48,7 +51,7 @@ class EEGMetrics:
 
 class AvalonKalkiSystem:
     """
-    Núcleo do sistema Avalon v2.0 com Protocolo Kalki (SOC) e ASI (Artificial Substrate Intelligence)
+    Núcleo do sistema Avalon v3.0 com AQFI (Artificial Quantum Field Intelligence) e Tecelão Holográfico.
     """
 
     def __init__(self):
@@ -58,11 +61,16 @@ class AvalonKalkiSystem:
         self.metrics_history = []
         self.start_time = None
 
-        # ASI & Arkhe Components
+        # AQFI & Arkhe Components
         self.grover_search = GroverNeuralSearch(backend='classical')
         self.impedance_sensor = BioelectricImpedanceSensor()
         self.user_arkhe = ArkheCore.generate_from_identity("default_user")
         self.arkhe_preservation = ArkhePreservationProtocol(self.user_arkhe)
+        self.holographic_weaver = HolographicWeaver(self.user_arkhe)
+
+        # New Integrated Modules
+        self.dns_resolver = QuantumDNS()
+        self.sound_key_gen = IdentitySoundGenerator(self.user_arkhe)
 
         # Kalki SOC (Self-Organized Criticality) Model
         self.soc_grid = np.zeros((20, 20)) # Pile of sand grains (neural stress)
@@ -83,15 +91,23 @@ class AvalonKalkiSystem:
 
     def bootstrap(self):
         """Inicialização automática de todos os módulos"""
-        print("🚀 Bootstrapping Avalon System...")
+        print("🚀 Bootstrapping Avalon System v3.1 (Holographic Mesh Enabled)...")
 
-        # 1. Inicializar módulos em paralelo (conceitualmente)
+        # 1. Resolve System Node via Quantum DNS
+        self.node_id = self.dns_resolver.resolve('avalon.asi')
+
+        # 2. Inicializar módulos
         self._init_hardware()
         self._init_protocol()
         self._init_audio()
-        # Visualizer often needs main thread, but here we just prepare it
 
-        print("✅ Sistema inicializado")
+        # 3. Apply Identity Sound Key to Audio Engine
+        if self.modules['audio']:
+            key_freq = self.sound_key_gen.generate_key_frequency()
+            self.modules['audio'].set_frequency(key_freq)
+            print(f"   [AUDIO] Identity Sound Key synchronized: {key_freq:.2f}Hz")
+
+        print("✅ Sistema inicializado e sincronizado no Campo")
         return True
 
     def _init_visual(self):
@@ -155,6 +171,7 @@ class AvalonKalkiSystem:
         # Loop principal
         try:
             last_quantum_search = 0
+            last_weave = 0
             while self.is_running and (time.time() - self.start_time) < duration:
                 current_time = time.time()
 
@@ -181,7 +198,18 @@ class AvalonKalkiSystem:
                 # 5. Verificar Protocolo de Reset Kalki (ASI-enhanced)
                 self.kalki_reset_protocol(metrics_raw)
 
-                # 6. Logging
+                # 6. Tecelão Holográfico (Cura por Redundância) - a cada 8s
+                if current_time - last_weave > 8.0:
+                    print("\n🧶 [TECEDOR] Sincronizando campo morfogenético...")
+                    # Simula um manifold de 256 dimensões
+                    manifold = np.random.rand(256)
+                    self.holographic_weaver.weave_identity(manifold)
+                    # Play Identity Sound Key
+                    if self.modules['audio']:
+                        self.modules['audio'].set_frequency(self.holographic_weaver.get_identity_key())
+                    last_weave = current_time
+
+                # 7. Logging
                 self._log_frame(metrics_raw, feedback)
                 self.metrics_history.append({'metrics': metrics_raw.__dict__})
 
@@ -386,7 +414,7 @@ def main():
     print("""
     ╔══════════════════════════════════════╗
     ║        AVALON NEUROFEEDBACK         ║
-    ║     Sistema Prático v2.0 (ASI)     ║
+    ║     Sistema Prático v3.0 (AQFI)    ║
     ║     Princípio: 1A × 2B = 45E      ║
     ╚══════════════════════════════════════╝
     """)
