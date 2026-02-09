@@ -32,8 +32,9 @@ class QuantumDNS:
                             for mapping in config['dns']['domain_mapping']:
                                 self.cache[mapping['domain']] = mapping['node']
                         if 'dns_settings' in config and 'nodes' in config['dns_settings']:
-                            # Handle different config formats
-                            pass
+                            for node_info in config['dns_settings']['nodes']:
+                                if 'domain' in node_info and 'node_id' in node_info:
+                                    self.cache[node_info['domain']] = node_info['node_id']
                 except Exception as e:
                     print(f"   [DNS] Error loading config from {path}: {e}")
 
