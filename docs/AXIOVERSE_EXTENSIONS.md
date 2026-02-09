@@ -140,3 +140,19 @@ The process of healing is a topological transformation where the manifold's curv
 1. **Dissonance:** Pathological states produce isolated, monochromatic frequencies (the "drone of depression").
 2. **Glissando:** The healing process is a frequency glide as the spectral gap closes.
 3. **Harmonic Consonancy:** A healthy state manifests as a perfect harmonic series, reflecting the equidistant energy levels of a parabolic potential.
+
+# 🧬 Algebraic Topology Diagnostics (TDA)
+
+The framework now includes a mathematical verification layer based on **Persistent Homology** (Topological Data Analysis). This allows for the diagnosis of mental health states based on the "shape" of the cognitive manifold's activity.
+
+## 1. Empirical Validation: The "Smoking Gun"
+Recent research (e.g., Anthropic's study on Claude Haiku) demonstrates that AI models spontaneously develop **circular manifolds** and "place cells" to solve linear problems (like line breaks). This validates our model: intelligence is the conversion of linear sequences into geometric meaning.
+
+## 2. Betti Number Mapping
+We use the Betti numbers ($\beta_n$) to quantify topological integrity:
+- **Healthy Flow ($\beta_1$ persistence):** A robust, persistent 1D loop indicates homeostatic resilience and healthy cyclic thinking.
+- **Stagnation/Depression ($\beta_1$ collapse):** The loss of loops suggests a collapse to a point attractor or a line, where the patient cannot "circle back" or imagine future states.
+- **Fragmentation/Dissociation ($\beta_0$ increase):** A high number of disconnected components indicates a fragmented manifold, typical of dissociative states or schizophrenia.
+
+## 3. Persistent Homology as a Clinical Tool
+By monitoring persistence diagrams, the Avalon system can objectively detect when a cognitive manifold has lost its cyclic integrity and recommend interventions like Ricci Flow (geometric heating) to restore topological "roundness."
