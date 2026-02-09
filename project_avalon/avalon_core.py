@@ -20,11 +20,13 @@ from project_avalon.philosophy.holographic_weaver import HolographicWeaver
 from project_avalon.utils.quantum_dns import QuantumDNS
 from project_avalon.audio.identity_sound import IdentitySoundGenerator
 
-# Arkhe(n) v5.0 Integrations
+# Arkhe(n) v6.0 Integrations
 from project_avalon.protocols.quantum_sarcophagus import QuantumSarcophagus
 from project_avalon.audio.cosmic_jam import CosmicJamSession
 from project_avalon.audio.pentalogy_melody import PentalogyMelody
 from project_avalon.quantum.echo_receiver import SaturnEchoScanner
+from project_avalon.protocols.wave_dynamics import TravelingWaveDynamics
+from project_avalon.protocols.binocular_rivalry import QuantumBinocularRivalry
 
 @dataclass
 class EEGMetrics:
@@ -57,8 +59,9 @@ class EEGMetrics:
 
 class AvalonKalkiSystem:
     """
-    Núcleo do sistema Avalon v5.0 (Pentad Integration).
+    Núcleo do sistema Avalon v6.0 (Metabolism of the Soul).
     Integra Arkhé (A), Biologia (B), Campo (C), DNA (D) e Transcendência (E).
+    Adiciona Dinâmica de Ondas Viajantes e Rivalidade Binocular Quântica.
     """
 
     def __init__(self):
@@ -79,11 +82,13 @@ class AvalonKalkiSystem:
         self.dns_resolver = QuantumDNS()
         self.sound_key_gen = IdentitySoundGenerator(self.user_arkhe)
 
-        # Arkhe(n) v5.0 Protocols
+        # Arkhe(n) v6.0 Protocols
         self.sarcophagus = QuantumSarcophagus("Hal Finney")
         self.jam_session = CosmicJamSession()
         self.pentalogy_melody = PentalogyMelody()
         self.echo_receiver = SaturnEchoScanner()
+        self.wave_dynamics = TravelingWaveDynamics()
+        self.temporal_lens = QuantumBinocularRivalry()
 
         # Pentad Multiplier (A*B*C*D*E)
         # ABC*D = 4308 hex (17160 dec)
@@ -397,6 +402,30 @@ class AvalonKalkiSystem:
 
         print("   [ARKHE(N)] Colapso de Onda Temporal Completo. O Manifold é Atemporal.")
         return packets
+
+    def execute_temporal_lens(self):
+        """
+        Executa o experimento de Rivalidade Binocular Quântica.
+        Tenta 'enxergar' através dos olhos de Finney-0 no futuro.
+        """
+        print("\n👁️  [ARKHE(N)] Ativando Lente Telescópica Temporal (Rivalidade Binocular)...")
+        t = time.time() - (self.start_time or time.time())
+
+        # 1. Simular metabolismo da alma
+        metabolism = self.wave_dynamics.simulate_metabolism(t)
+        print(f"   [METABOLISMO] Coerência Temporal: {metabolism['temporal_coherence']:.2f}")
+
+        # 2. Interferência Temporal
+        vision = self.temporal_lens.perform_temporal_interference(t)
+        print(f"   [INTERFERÊNCIA] Intensidade: {vision['intensity']:.4f}")
+        print(f"   [OBSERVAÇÃO] {vision['perceptual_observation']}")
+
+        if vision['intensity'] > 0.7 and self.modules['visual']:
+            # Trigger 'Epiphany Flash'
+            try: self.modules['visual'].trigger_kalki_flash()
+            except: pass
+
+        return vision
 
     def scan_future_echoes(self):
         """Realiza varredura de ecos do futuro (ano 12.024)"""
