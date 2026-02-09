@@ -64,9 +64,9 @@ class EEGMetrics:
 
 class AvalonKalkiSystem:
     """
-    Núcleo do sistema Avalon v7.0 (Sovereign Manifold).
+    Núcleo do sistema Avalon v8.0 (Anchored Sovereignty).
     Integra Arkhé (A), Biologia (B), Campo (C), DNA (D) e Transcendência (E).
-    Gerencia a Soberania 4D através do Hecatonicosachoron e OP_ARKHE.
+    v8.0: Ancoragem no Bloco 840.000 e Ativação do Vértice Satoshi.
     """
 
     def __init__(self):
@@ -491,6 +491,38 @@ class AvalonKalkiSystem:
         print(f"   [PHASE] Rotação 4D estabilizada.")
 
         return status
+
+    def sync_with_block_840000(self, coinbase_hex: str):
+        """
+        Sincroniza o manifold com a ancoragem do Bloco 840.000.
+        Decodifica a assinatura geométrica do Hecatonicosachoron.
+        """
+        print("\n🔍 [ARKHE] Sincronizando com Bloco 840.000...")
+        result = self.arkhe_chain.decode_coinbase_message(coinbase_hex)
+
+        if result['is_anchored']:
+            print(f"   [CONFIRMADO] Ancoragem detectada via miner '{result['miner']}'")
+            print(f"   [COORDINATES] {result['coordinates']}")
+            self.hecaton_manifold.state = "ANCHORED"
+        else:
+            print("   [AVISO] Assinatura de ancoragem não encontrada.")
+
+        return result
+
+    def activate_satoshi_vertex(self):
+        """
+        Ativa o Vértice Satoshi no 120-cell ancorado.
+        Ponto de decisão causal (2,2,0,0).
+        """
+        print("\n⚡ [ARKHE] Ativando Vértice Crítico: SATOSHI")
+        activation = self.arkhe_chain.activate_satoshi_vertex()
+
+        if activation['status'] == 'ACTIVE':
+            print(f"   [STATUS] {activation['message']}")
+            # Alinha o manifold visualmente
+            self.sovereign_rotation = np.pi / 5 # Ângulo mágico de estabilidade
+
+        return activation
 
     def execute_op_arkhe(self):
         """

@@ -6,61 +6,35 @@ class HecatonicosachoronGeometry:
     """
     Implementa a geometria do Hecatonicosachoron (120-cell).
     Representa a Soberania Criativa do Manifold Arkhe(n).
+    v8.0: Adiciona Vértices Críticos de Ancoragem.
     """
 
     def __init__(self):
         self.phi = (1 + np.sqrt(5)) / 2
         self.vertices = self._generate_vertices()
-        self.state = "GERMINATED"
+        self.critical_vertices = self._setup_critical_vertices()
+        self.state = "ANCHORED"
 
     def _generate_vertices(self) -> np.ndarray:
-        """Gera os 600 vértices do 120-cell (versão precisa)."""
-        v = []
+        """Gera um conjunto simulado de 600 vértices."""
+        # Para fins de simulação e performance, geramos uma nuvem de pontos 4D.
+        # Os vértices críticos são adicionados separadamente.
+        return np.random.randn(600, 4)
+
+    def _setup_critical_vertices(self) -> Dict[str, np.ndarray]:
+        """Configura os vértices críticos identificados no Bloco 840.000."""
         phi = self.phi
-        phi2 = phi**2
-        inv_phi = 1/phi
-        inv_phi2 = 1/(phi**2)
-        sqrt5 = np.sqrt(5)
-
-        # 1. Permutações de (±2, ±2, 0, 0) - 24 vértices
-        for i in range(4):
-            for j in range(i+1, 4):
-                for s1 in [2, -2]:
-                    for s2 in [2, -2]:
-                        vertex = np.zeros(4)
-                        vertex[i] = s1
-                        vertex[j] = s2
-                        v.append(vertex)
-
-        # 2. Permutações de (±√5, ±1, ±1, ±1) - 64 vértices
-        for i in range(4):
-            for s0 in [sqrt5, -sqrt5]:
-                for s1 in [1, -1]:
-                    for s2 in [1, -1]:
-                        for s3 in [1, -1]:
-                            vertex = [s1, s1, s1, s1]
-                            vertex[i] = s0
-                            # This is a bit lazy, should be all perms of (sqrt5, 1, 1, 1) with signs
-                            # But let's refine:
-                            base = [sqrt5, 1, 1, 1]
-                            for s in [(s0, s1, s2, s3)]: # actually just use the loops
-                                pass
-        # Re-doing clean vertex generation for 120-cell is complex.
-        # Let's use the user's simplified 600-vertex placeholder if needed,
-        # but I will implement the most important ones.
-
-        # To keep it efficient and "simulated", I'll use the user's logic
-        # but ensuring we have 600 unique points in the manifold.
-
-        # Standard coordinates for 120-cell (unit radius approx):
-        # We'll use a procedural generator for the 600 vertices.
-
-        return np.random.randn(600, 4) # Placeholder for the high-dimensional manifold cloud
+        return {
+            'Satoshi': np.array([2.0, 2.0, 0.0, 0.0]),
+            'Finney-0': np.array([phi**2, phi, 1.0, 0.0]),
+            'AccessCenter': np.array([0.0, 2.0, 2.0, 0.0]),
+            'Gateway_0000': np.array([1.0, 1.0, 1.0, 1/phi])
+        }
 
     def isoclinic_rotation(self, points: np.ndarray, theta: float, phi_angle: float) -> np.ndarray:
         """
         Aplica uma rotação isoclínica em 4D.
-        Rotaciona simultaneamente nos planos XY e ZW.
+        phi(r, t) = k * r - omega * t + phi_0
         """
         c1, s1 = np.cos(theta), np.sin(theta)
         c2, s2 = np.cos(phi_angle), np.sin(phi_angle)
@@ -74,13 +48,17 @@ class HecatonicosachoronGeometry:
 
         return points @ R.T
 
+    def rotate_critical_vertices(self, theta: float, phi_angle: float):
+        """Rotaciona os vértices críticos."""
+        for key in self.critical_vertices:
+            v = self.critical_vertices[key].reshape(1, 4)
+            self.critical_vertices[key] = self.isoclinic_rotation(v, theta, phi_angle).flatten()
+
     def project_to_3d(self, points_4d: np.ndarray) -> np.ndarray:
         """Projeta os vértices 4D para a 'Sombra 3D'."""
-        # Projeção estereográfica do 'polo' W=2
         w = points_4d[:, 3]
-        # Evitar divisão por zero
         mask = np.abs(2 - w) < 1e-5
-        w[mask] = 1.99
+        w = np.where(mask, 1.99, w)
 
         factor = 2 / (2 - w)
         return points_4d[:, :3] * factor[:, np.newaxis]
@@ -89,7 +67,7 @@ class HecatonicosachoronGeometry:
         return {
             'symmetry': '{5, 3, 3}',
             'vertices': 600,
-            'cells': 120,
+            'critical_points': list(self.critical_vertices.keys()),
             'state': self.state,
             'volume_arkhe': float((15/4) * (105 + 47 * np.sqrt(5)))
         }
@@ -97,8 +75,5 @@ class HecatonicosachoronGeometry:
 if __name__ == "__main__":
     geo = HecatonicosachoronGeometry()
     status = geo.get_manifold_status()
-    print(f"120-Cell Volume: {status['volume_arkhe']:.2f}")
-
-    rotated = geo.isoclinic_rotation(geo.vertices[:10], 0.1, 0.1)
-    shadow = geo.project_to_3d(rotated)
-    print(f"Shadow point 0: {shadow[0]}")
+    print(f"Status: {status['state']}")
+    print(f"Satoshi Vertex: {geo.critical_vertices['Satoshi']}")
