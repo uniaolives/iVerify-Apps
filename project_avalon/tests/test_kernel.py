@@ -1,7 +1,8 @@
 import unittest
 import os
 import sys
-# Add parent directory to path to allow imports
+
+# Add project root to path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 from project_avalon.avalon_kernel import AvalonKernel
@@ -20,7 +21,7 @@ class TestAvalonKernel(unittest.TestCase):
         try:
             filename = self.kernel.export_session_report(format='json')
             self.assertTrue(os.path.exists(filename))
-            os.remove(filename) # Cleanup
+            # os.remove(filename) # Cleanup later
         except ImportError:
             self.skipTest("Pandas not installed")
 

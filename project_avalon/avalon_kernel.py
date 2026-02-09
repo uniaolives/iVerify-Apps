@@ -1,3 +1,4 @@
+# project_avalon/avalon_kernel.py
 import numpy as np
 import os
 import json
@@ -52,11 +53,12 @@ class AvalonKernel:
             timestamp = (datetime.now() - start_time).total_seconds()
             self.session_timestamps.append(timestamp)
 
-            # Simulated metrics
-            self.coherence_history.append(0.8 + 0.2 * np.random.rand())
-            self.curvature_history.append(1.0 / (1.0 + i * 0.1))
-            self.alpha_history.append(5.0 + 2.0 * np.sin(i * 0.1) + np.random.rand())
-            self.theta_history.append(3.0 + 1.0 * np.cos(i * 0.15) + np.random.rand())
+            # Metrics
+            metrics = self.eeg_processor.get_metrics()
+            self.coherence_history.append(metrics.get('coherence', 0.8))
+            self.curvature_history.append(metrics.get('curvature', 1.0))
+            self.alpha_history.append(metrics.get('alpha_power', 5.0))
+            self.theta_history.append(metrics.get('theta_power', 3.0))
 
         print("Session complete.")
 
@@ -81,6 +83,10 @@ class AvalonKernel:
 
         print(f"Session report exported to {filename}")
         return filename
+
+    def get_metrics(self):
+        """Mock for GUI integration if needed."""
+        return self.eeg_processor.get_metrics()
 
 if __name__ == "__main__":
     kernel = AvalonKernel()

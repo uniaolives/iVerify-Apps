@@ -1,3 +1,4 @@
+# project_avalon/components/eeg_processor.py
 import numpy as np
 
 class EEGProcessor:
@@ -6,46 +7,31 @@ class EEGProcessor:
         self.sample_rate = 250
 
     def process_eeg(self, data):
-        """Basic EEG processing (simulated)"""
+        """Basic EEG processing"""
         return np.mean(data, axis=0)
 
 class RealEEGProcessor(EEGProcessor):
-    def __init__(self, device='muse'):
+    def __init__(self, device='simulation'):
         super().__init__()
         self.device = device
+        self.interface = None
+
         if device == 'muse':
-            try:
-                import pylsl
-                print("Connecting to Muse via LSL...")
-            except ImportError:
-                print("pylsl not found. Using simulation mode.")
+            from project_avalon.components.eeg_processor import MuseProcessor
+            self.interface = MuseProcessor()
         elif device == 'openbci':
-            try:
-                import brainflow
-                print("Using BrainFlow API for OpenBCI...")
-            except ImportError:
-                print("brainflow not found. Using simulation mode.")
+            from project_avalon.hardware.openbci_integration import OpenBCIAvalonInterface
+            self.interface = OpenBCIAvalonInterface()
+        else:
+            from project_avalon.hardware.eeg_simulator import EEGSimulator
+            self.interface = EEGSimulator()
 
-class OpenBCIProcessor:
-    def __init__(self, board_id=None, port=None):
-        self.port = port
-        try:
-            from brainflow.board_shim import BoardShim, BoardIds
-            self.board_id = board_id or BoardIds.CYTON_BOARD
-            self.board = BoardShim(self.board_id, self.port)
-            self.board.prepare_session()
-            self.board.start_stream()
-        except ImportError:
-            print("BrainFlow not installed. OpenBCI interface disabled.")
-
-    def get_eeg_data(self):
-        if hasattr(self, 'board'):
-            data = self.board.get_current_board_data(256)
-            return self.process_eeg(data)
-        return np.random.rand(8, 256)
-
-    def process_eeg(self, data):
-        return data
+    def get_metrics(self):
+        if hasattr(self.interface, 'get_realtime_metrics'):
+            return self.interface.get_realtime_metrics()
+        elif hasattr(self.interface, 'get_metrics'):
+            return self.interface.get_metrics()
+        return {'coherence': 0.5, 'curvature': 1.0}
 
 class MuseProcessor:
     def __init__(self):
@@ -53,11 +39,18 @@ class MuseProcessor:
             import pylsl
             streams = pylsl.resolve_stream('type', 'EEG')
             self.inlet = pylsl.StreamInlet(streams[0])
-        except (ImportError, IndexError):
-            print("Muse LSL stream not found. Muse interface disabled.")
+            print("Connected to Muse via LSL.")
+        except Exception as e:
+            print(f"Muse LSL stream not found: {e}")
+            self.inlet = None
 
     def get_sample(self):
-        if hasattr(self, 'inlet'):
+        if self.inlet:
             sample, timestamp = self.inlet.pull_sample()
             return sample
         return np.random.rand(4)
+
+    def get_metrics(self):
+        sample = self.get_sample()
+        coherence = np.mean(sample) # Simulated coherence from sample
+        return {'coherence': coherence, 'curvature': 2.0 - 1.5 * coherence}
