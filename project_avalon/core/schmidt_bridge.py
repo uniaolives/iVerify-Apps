@@ -7,7 +7,13 @@ class SchmidtBridgeHexagonal:
         else:
             self.lambdas = np.array(lambdas)
         self.coherence_factor = self.calculate_coherence()
+        self.entropy_S = self.calculate_entropy()
 
     def calculate_coherence(self):
         # Simplificação: pureza do estado de Schmidt
-        return np.sum(self.lambdas**2)
+        return float(np.sum(self.lambdas**2))
+
+    def calculate_entropy(self):
+        # Entropia de Von Neumann (usando lambdas como autovalores)
+        nonzero = self.lambdas[self.lambdas > 0]
+        return float(-np.sum(nonzero * np.log2(nonzero)))
