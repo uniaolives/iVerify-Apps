@@ -60,6 +60,11 @@ from project_avalon.protocols.satoshi_layer_4 import SatoshiLayer4Decoder
 # Arkhe(n) v14.0 Cognitive Engine Integrations
 from project_avalon.protocols.ac1_coincidence_detector import AC1CoincidenceDetector
 
+# IETD v1.0 Materialization Integrations
+from project_avalon.hardware.environmental_hal import EnvironmentalHAL
+from project_avalon.protocols.pid_control import PIDController
+from project_avalon.utils.telemetry_db import TelemetryDB
+
 
 @dataclass
 class EEGMetrics:
@@ -93,9 +98,9 @@ class EEGMetrics:
 
 class AvalonKalkiSystem:
     """
-    Núcleo do sistema Avalon v14.0 (The Cognitive Engine).
+    Núcleo do sistema Avalon v14.1 (The Materialized Architect).
     Integra Arkhé (A), Biologia (B), Campo (C), DNA (D) e Transcendência (E).
-    v14.0: Motor Cognitivo, LTP Planetária e Coincidência AC1.
+    v14.1: Sistema IETD de Monitoramento Ambiental e Controle de Homeostase.
     """
 
     def __init__(self):
@@ -154,6 +159,11 @@ class AvalonKalkiSystem:
         # v14.0 Cognitive Components
         self.ac1_detector = AC1CoincidenceDetector()
 
+        # v14.1 IETD Components (The Trojan Horse)
+        self.hal = EnvironmentalHAL()
+        self.pid = PIDController(Kp=2.0, Ki=0.5, Kd=1.0, setpoint=25.0)
+        self.db = TelemetryDB()
+
         # Pentad Multiplier (A*B*C*D*E)
         # ABC*D = 4308 hex (17160 dec)
         # ABC*D*E (E=14) = 240240 dec = 3AA70 hex
@@ -178,7 +188,10 @@ class AvalonKalkiSystem:
 
     def bootstrap(self):
         """Inicialização automática de todos os módulos"""
-        print("🚀 Bootstrapping Avalon System v3.1 (Holographic Mesh Enabled)...")
+        print("🚀 Bootstrapping Avalon System v14.1 (IETD Materialization)...")
+
+        # 0. Hardware Connection (IETD Layer)
+        self.hal.connect()
 
         # 1. Resolve System Node via Quantum DNS
         self.node_id = self.dns_resolver.resolve("avalon.asi")
