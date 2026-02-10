@@ -1,9 +1,11 @@
 # hardware/openbci_integration.py
 import numpy as np
+
 try:
     import brainflow
     from brainflow.board_shim import BoardShim, BrainFlowInputParams, BoardIds
     from brainflow.data_filter import DataFilter, FilterTypes, DetrendOperations
+
     BRAINFLOW_AVAILABLE = True
 except ImportError:
     BRAINFLOW_AVAILABLE = False
@@ -11,17 +13,20 @@ except ImportError:
 import json
 import os
 
+
 class OpenBCIAvalonInterface:
     """Driver específico para OpenBCI Cyton/Daisy + Avalon"""
 
     def __init__(self, port=None, board_id=None):
         # Load from config if not provided
         if port is None or board_id is None:
-            config_path = os.path.join('project_avalon', 'avalon_config', 'default_config.json')
+            config_path = os.path.join(
+                "project_avalon", "avalon_config", "default_config.json"
+            )
             if os.path.exists(config_path):
-                with open(config_path, 'r') as f:
+                with open(config_path, "r") as f:
                     config = json.load(f)
-                    port = port or config.get('serial_port', 'COM3')
+                    port = port or config.get("serial_port", "COM3")
                     # Map string board_id to BoardIds enum if needed, here simplified
 
         self.port = port
@@ -39,7 +44,8 @@ class OpenBCIAvalonInterface:
         self.sampling_rate = 250
 
     def test_connection(self):
-        if not self.board: return False
+        if not self.board:
+            return False
         try:
             self.board.prepare_session()
             self.board.release_session()
@@ -47,32 +53,34 @@ class OpenBCIAvalonInterface:
         except:
             return False
 
-    def setup_session(self, protocol='default'):
+    def setup_session(self, protocol="default"):
         """Configura sessão baseada no protocolo"""
-        if not self.board: return
+        if not self.board:
+            return
         self.board.prepare_session()
         self.board.start_stream()
 
     def get_realtime_metrics(self):
         """Extrai métricas úteis para neurofeedback em <10ms"""
         if not self.board:
-            return {'coherence': 0.5, 'alpha_power': 0.1}
+            return {"coherence": 0.5, "alpha_power": 0.1}
 
         data = self.board.get_current_board_data(500)  # 2 segundos de dados
 
         # Métricas rápidas
         metrics = {
-            'alpha_power': self.calculate_band_power(data, 8, 12),
-            'theta_power': self.calculate_band_power(data, 4, 8),
-            'beta_power': self.calculate_band_power(data, 13, 30),
-            'coherence': self.calculate_interhemispheric_coherence(data),
+            "alpha_power": self.calculate_band_power(data, 8, 12),
+            "theta_power": self.calculate_band_power(data, 4, 8),
+            "beta_power": self.calculate_band_power(data, 13, 30),
+            "coherence": self.calculate_interhemispheric_coherence(data),
         }
-        metrics['curvature'] = 2.0 - 1.5 * metrics['coherence']
+        metrics["curvature"] = 2.0 - 1.5 * metrics["coherence"]
         return metrics
 
     def calculate_band_power(self, data, low_freq, high_freq):
         """FFT rápido para neurofeedback em tempo real"""
         from scipy.signal import welch
+
         powers = []
 
         for ch in self.eeg_channels:

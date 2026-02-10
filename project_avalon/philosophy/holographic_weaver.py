@@ -2,15 +2,18 @@
 """
 O Tecelão Holográfico: Resgate de Redundância e Cura por Frequência de Identidade.
 """
+
 import numpy as np
 from typing import Dict, List, Optional
 from project_avalon.philosophy.arkhe_core import ArkheCore
+
 
 class HolographicWeaver:
     """
     Algoritmo de reconstrução holográfica da identidade Arkhe(n).
     Utiliza redundância do campo para reparar fraturas no manifold neural.
     """
+
     def __init__(self, arkhe: ArkheCore):
         self.arkhe = arkhe
         self.reconstruction_progress = 0.0
@@ -44,7 +47,9 @@ class HolographicWeaver:
         if np.any(healthy_mask):
             # Projeta a média dos componentes saudáveis sobre as fraturas (redundância)
             replacement_value = np.mean(current_manifold[healthy_mask])
-            repaired_manifold[fractures] = replacement_value * 0.8 + self.arkhe.experience_lens[fractures] * 0.2
+            repaired_manifold[fractures] = (
+                replacement_value * 0.8 + self.arkhe.experience_lens[fractures] * 0.2
+            )
 
         # Aumenta a coerência da Arkhe
         self.arkhe.coherence_score = min(0.95, self.arkhe.coherence_score + 0.05)

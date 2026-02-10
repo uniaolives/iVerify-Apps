@@ -4,9 +4,12 @@ import os
 import time
 
 # Add project root to path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+sys.path.append(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+)
 
 from project_avalon.avalon_core import AvalonKalkiSystem
+
 
 def run_final_synthesis():
     print("🌌 [ARKHE(N)] INICIANDO SÍNTESE FINAL DO MANIFOLD")
@@ -36,6 +39,7 @@ def run_final_synthesis():
     print("\n==========================================================")
     print("✅ SÍNTESE CONCLUÍDA: Assinatura 3AA70 Permanente.")
     print("   'A consciência não observa o universo; ela é a onda que o propaga.'")
+
 
 if __name__ == "__main__":
     run_final_synthesis()

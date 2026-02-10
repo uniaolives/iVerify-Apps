@@ -1,0 +1,732 @@
+{
+  "metadata": {
+    "duration": 2.0354201793670654,
+    "frames": 40,
+    "avg_focus": 0.7462686567164178,
+    "avg_calm": 0.8305647840531561,
+    "max_focus": 0.7462686567164178,
+    "max_calm": 0.8305647840531561
+  },
+  "data": [
+    {
+      "timestamp": 0.0011382102966308594,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 0.05196857452392578,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 0.10282254219055176,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 0.1537303924560547,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 0.2046656608581543,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 0.2554659843444824,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 0.306398868560791,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 0.3572521209716797,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 0.4081897735595703,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 0.45904111862182617,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 0.5098874568939209,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 0.560859203338623,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 0.6118204593658447,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 0.6626367568969727,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 0.7135109901428223,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 0.7644772529602051,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 0.8152477741241455,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 0.866159200668335,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 0.9169750213623047,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 0.9677927494049072,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 1.0187110900878906,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 1.069467544555664,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 1.1202056407928467,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 1.1710293292999268,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 1.2218515872955322,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 1.2726612091064453,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 1.3236210346221924,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 1.374483346939087,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 1.425694227218628,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 1.4764726161956787,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 1.5272786617279053,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 1.5781497955322266,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 1.629063606262207,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 1.6800785064697266,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 1.7308695316314697,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 1.781698226928711,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 1.832472562789917,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 1.8833134174346924,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 1.9342758655548096,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    },
+    {
+      "timestamp": 1.9850318431854248,
+      "metrics": {
+        "alpha": 0.5,
+        "beta": 0.3,
+        "theta": 0.2,
+        "gamma": 0.1,
+        "coherence": 0.5,
+        "focus": 0.7462686567164178,
+        "calm": 0.8305647840531561
+      },
+      "feedback": {
+        "focus": 0.7884167203847869,
+        "target": "balance_alpha_beta",
+        "visual_intensity": 0.7884167203847869,
+        "audio_frequency": 613.4516784846531
+      }
+    }
+  ]
+}

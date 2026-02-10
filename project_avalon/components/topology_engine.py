@@ -3,10 +3,12 @@ import matplotlib.pyplot as plt
 from scipy.linalg import eigh
 from scipy.ndimage import gaussian_filter
 
+
 class MindHealer:
     """
     Simulador de Patologias Geométricas e Cura via Fluxo de Ricci
     """
+
     def __init__(self, N_states=100):
         self.N = N_states
         self.x = np.linspace(-10, 10, N_states)
@@ -25,7 +27,7 @@ class MindHealer:
             # O "Poço Negro". Um atrator profundo e estreito.
             V = 0.5 * 0.1 * self.x**2  # Baixa motivação geral
             # O Trauma/Fixação:
-            V -= 15 * np.exp(-(self.x - 2)**2 / 0.5)
+            V -= 15 * np.exp(-((self.x - 2) ** 2) / 0.5)
 
         elif condition == "anxiety":
             # O "Mar de Ruído". Múltiplos mínimos locais.
@@ -63,6 +65,7 @@ class MindHealer:
             V_evolution.append(V_current.copy())
 
         return V_evolution
+
 
 if __name__ == "__main__":
     healer = MindHealer()

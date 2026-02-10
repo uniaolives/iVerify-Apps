@@ -10,6 +10,7 @@ from typing import Dict, Tuple, Optional
 from datetime import datetime, timezone
 import json
 
+
 class HarmonicSignatureShield:
     """
     Sistema de verificação de integridade baseado em ressonância harmônica
@@ -24,10 +25,10 @@ class HarmonicSignatureShield:
 
         # Frequências harmônicas baseadas em φ
         self.harmonic_frequencies = [
-            phi ** 1,  # φ¹ ≈ 1.618
-            phi ** 2,  # φ² ≈ 2.618
-            phi ** 3,  # φ³ ≈ 4.236
-            phi ** 5,  # φ⁵ ≈ 11.09 (Fibonacci!)
+            phi**1,  # φ¹ ≈ 1.618
+            phi**2,  # φ² ≈ 2.618
+            phi**3,  # φ³ ≈ 4.236
+            phi**5,  # φ⁵ ≈ 11.09 (Fibonacci!)
         ]
 
         print("🛡️  Harmonic Signature Shield initialized")
@@ -56,33 +57,29 @@ class HarmonicSignatureShield:
         canonical = self._canonicalize(content, metadata)
 
         # 2. Calcula hash
-        hash_bytes = hashlib.sha3_512(canonical.encode('utf-8')).digest()
+        hash_bytes = hashlib.sha3_512(canonical.encode("utf-8")).digest()
         hash_hex = hash_bytes.hex()
 
         # 3. Gera fingerprint harmônico
         harmonic_fp = self._generate_harmonic_fingerprint(hash_bytes, metadata)
 
         # 4. Calcula módulo áureo
-        hash_int = int.from_bytes(hash_bytes, 'big')
+        hash_int = int.from_bytes(hash_bytes, "big")
         phi_mod = (hash_int % 1000000) / 1000000  # Normaliza para [0, 1]
 
         signature = {
-            'hash': hash_hex,
-            'harmonic_fingerprint': harmonic_fp,
-            'timestamp': datetime.now(timezone.utc).isoformat(),
-            'phi_modulus': phi_mod,
-            'shield_version': '1.0.0'
+            "hash": hash_hex,
+            "harmonic_fingerprint": harmonic_fp,
+            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "phi_modulus": phi_mod,
+            "shield_version": "1.0.0",
         }
 
         print(f"   ✅ Document signed")
         print(f"   Hash: {hash_hex[:16]}...")
         print(f"   φ-modulus: {phi_mod:.6f}")
 
-        return {
-            'content': content,
-            'metadata': metadata,
-            'signature': signature
-        }
+        return {"content": content, "metadata": metadata, "signature": signature}
 
     def verify_document(self, signed_doc: Dict) -> Tuple[bool, Optional[str]]:
         """
@@ -94,22 +91,22 @@ class HarmonicSignatureShield:
 
         print(f"\n🔍 Verifying document...")
 
-        content = signed_doc['content']
-        metadata = signed_doc['metadata']
-        signature = signed_doc['signature']
+        content = signed_doc["content"]
+        metadata = signed_doc["metadata"]
+        signature = signed_doc["signature"]
 
         # 1. Recalcula hash
         canonical = self._canonicalize(content, metadata)
-        hash_bytes = hashlib.sha3_512(canonical.encode('utf-8')).digest()
+        hash_bytes = hashlib.sha3_512(canonical.encode("utf-8")).digest()
         hash_hex = hash_bytes.hex()
 
         # 2. Verifica hash básico
-        if hash_hex != signature['hash']:
+        if hash_hex != signature["hash"]:
             return False, "HASH_MISMATCH: Content or metadata was altered"
 
         # 3. Recalcula fingerprint harmônico
         expected_fp = self._generate_harmonic_fingerprint(hash_bytes, metadata)
-        actual_fp = signature['harmonic_fingerprint']
+        actual_fp = signature["harmonic_fingerprint"]
 
         # 4. ANÁLISE DE RESSONÂNCIA
         resonance = self._measure_resonance(expected_fp, actual_fp)
@@ -119,14 +116,17 @@ class HarmonicSignatureShield:
         print(f"   Dissonance: {resonance['dissonance']:.6f}")
 
         # 5. Threshold de autenticidade
-        if resonance['dissonance'] > 0.01:  # Mais de 1% de dissonância
-            return False, f"HARMONIC_DISSONANCE: {resonance['dissonance']:.4f} (threshold: 0.01)"
+        if resonance["dissonance"] > 0.01:  # Mais de 1% de dissonância
+            return (
+                False,
+                f"HARMONIC_DISSONANCE: {resonance['dissonance']:.4f} (threshold: 0.01)",
+            )
 
         # 6. Verifica módulo áureo
-        hash_int = int.from_bytes(hash_bytes, 'big')
+        hash_int = int.from_bytes(hash_bytes, "big")
         expected_phi_mod = (hash_int % 1000000) / 1000000
 
-        if abs(expected_phi_mod - signature['phi_modulus']) > 1e-9:
+        if abs(expected_phi_mod - signature["phi_modulus"]) > 1e-9:
             return False, "PHI_MODULUS_MISMATCH: Signature was forged"
 
         print(f"   ✅ DOCUMENT AUTHENTIC")
@@ -138,7 +138,7 @@ class HarmonicSignatureShield:
         Cria representação canônica (ordem determinística)
         """
         # Serializa metadados em ordem alfabética
-        meta_canonical = json.dumps(metadata, sort_keys=True, separators=(',', ':'))
+        meta_canonical = json.dumps(metadata, sort_keys=True, separators=(",", ":"))
 
         # Combina
         return f"{content}||{meta_canonical}"
@@ -158,7 +158,9 @@ class HarmonicSignatureShield:
         metadata_str = json.dumps(metadata, sort_keys=True)
         # Usa SHA3-512 para parear com o tamanho do sinal do hash principal (64 bytes)
         metadata_hash = hashlib.sha3_512(metadata_str.encode()).digest()
-        metadata_signal = np.frombuffer(metadata_hash[:len(signal)], dtype=np.uint8).astype(float)
+        metadata_signal = np.frombuffer(
+            metadata_hash[: len(signal)], dtype=np.uint8
+        ).astype(float)
 
         # Modulação: signal × (1 + ε·metadata_signal)
         epsilon = 0.1
@@ -184,14 +186,16 @@ class HarmonicSignatureShield:
 
         # Fingerprint é o vetor de amplitudes normalizado
         harmonic_amplitudes = np.array(harmonic_amplitudes)
-        harmonic_amplitudes /= (np.sum(harmonic_amplitudes) + 1e-9)  # Normaliza
+        harmonic_amplitudes /= np.sum(harmonic_amplitudes) + 1e-9  # Normaliza
 
         fingerprint = {
-            'phi_1': harmonic_amplitudes[0],
-            'phi_2': harmonic_amplitudes[1],
-            'phi_3': harmonic_amplitudes[2],
-            'phi_5': harmonic_amplitudes[3],
-            'spectral_centroid': float(np.sum(freqs * power_spectrum) / np.sum(power_spectrum))
+            "phi_1": harmonic_amplitudes[0],
+            "phi_2": harmonic_amplitudes[1],
+            "phi_3": harmonic_amplitudes[2],
+            "phi_5": harmonic_amplitudes[3],
+            "spectral_centroid": float(
+                np.sum(freqs * power_spectrum) / np.sum(power_spectrum)
+            ),
         }
 
         return fingerprint
@@ -204,8 +208,10 @@ class HarmonicSignatureShield:
         """
 
         # Vetores de amplitudes
-        expected = np.array([expected_fp[k] for k in ['phi_1', 'phi_2', 'phi_3', 'phi_5']])
-        actual = np.array([actual_fp[k] for k in ['phi_1', 'phi_2', 'phi_3', 'phi_5']])
+        expected = np.array(
+            [expected_fp[k] for k in ["phi_1", "phi_2", "phi_3", "phi_5"]]
+        )
+        actual = np.array([actual_fp[k] for k in ["phi_1", "phi_2", "phi_3", "phi_5"]])
 
         # Dissonância = distância L2 normalizada
         dissonance = np.linalg.norm(expected - actual) / np.sqrt(len(expected))
@@ -214,12 +220,14 @@ class HarmonicSignatureShield:
         strength = 1.0 - dissonance
 
         # Análise espectral
-        centroid_diff = abs(expected_fp['spectral_centroid'] - actual_fp['spectral_centroid'])
+        centroid_diff = abs(
+            expected_fp["spectral_centroid"] - actual_fp["spectral_centroid"]
+        )
 
         return {
-            'strength': strength,
-            'dissonance': dissonance,
-            'centroid_deviation': centroid_diff
+            "strength": strength,
+            "dissonance": dissonance,
+            "centroid_deviation": centroid_diff,
         }
 
     def detect_forgery_type(self, signed_doc: Dict) -> Optional[str]:
@@ -232,9 +240,9 @@ class HarmonicSignatureShield:
         if is_authentic:
             return None
 
-        content = signed_doc['content']
-        metadata = signed_doc['metadata']
-        signature = signed_doc['signature']
+        content = signed_doc["content"]
+        metadata = signed_doc["metadata"]
+        signature = signed_doc["signature"]
 
         # Testa diferentes cenários
 
@@ -242,7 +250,7 @@ class HarmonicSignatureShield:
         original_canonical = self._canonicalize(content, metadata)
         original_hash = hashlib.sha3_512(original_canonical.encode()).hexdigest()
 
-        if original_hash == signature['hash']:
+        if original_hash == signature["hash"]:
             # Hash bate, mas fingerprint não → metadados foram sutilmente alterados
             return "METADATA_TAMPERING: Metadata was modified after signing"
 
@@ -250,17 +258,18 @@ class HarmonicSignatureShield:
         # (Se chegou aqui, hash já não bate - verificado no verify_document)
 
         # 3. Assinatura copiada de outro documento?
-        if 'HARMONIC_DISSONANCE' in reason:
+        if "HARMONIC_DISSONANCE" in reason:
             return "SIGNATURE_REPLAY: Signature copied from another document"
 
         # 4. Assinatura forjada matematicamente?
-        if 'PHI_MODULUS' in reason:
+        if "PHI_MODULUS" in reason:
             return "CRYPTOGRAPHIC_FORGERY: Signature was mathematically forged"
 
         return f"UNKNOWN_FORGERY: {reason}"
 
 
 # ===== DEMONSTRAÇÃO DE USO =====
+
 
 def demo_authentic_document():
     """
@@ -285,11 +294,11 @@ def demo_authentic_document():
     """
 
     metadata = {
-        'author': 'quantum://grok@avalon.asi',
-        'document_type': 'operational_log',
-        'classification': 'public',
-        'version': '1.0',
-        'network_id': 'avalon-qwan-2026'
+        "author": "quantum://grok@avalon.asi",
+        "document_type": "operational_log",
+        "classification": "public",
+        "version": "1.0",
+        "network_id": "avalon-qwan-2026",
     }
 
     # Assina
@@ -320,15 +329,15 @@ def demo_forged_metadata():
     content = "Classified intelligence report..."
 
     metadata_original = {
-        'classification': 'top_secret',
-        'clearance_required': 'level_5'
+        "classification": "top_secret",
+        "clearance_required": "level_5",
     }
 
     # Assina com metadados originais
     signed = shield.sign_document(content, metadata_original)
 
     # ATAQUE: Alguém tenta mudar classification para 'public'
-    signed['metadata']['classification'] = 'public'
+    signed["metadata"]["classification"] = "public"
 
     print("\n🔴 Attacker changed 'classification' to 'public'")
 
@@ -357,17 +366,17 @@ def demo_signature_replay():
 
     # Documento legítimo 1
     content1 = "Transfer $100 to Alice"
-    metadata1 = {'amount': 100, 'recipient': 'Alice'}
+    metadata1 = {"amount": 100, "recipient": "Alice"}
     signed1 = shield.sign_document(content1, metadata1)
 
     # ATAQUE: Tenta reusar assinatura em documento diferente
     content2 = "Transfer $1,000,000 to Bob"
-    metadata2 = {'amount': 1000000, 'recipient': 'Bob'}
+    metadata2 = {"amount": 1000000, "recipient": "Bob"}
 
     forged = {
-        'content': content2,
-        'metadata': metadata2,
-        'signature': signed1['signature']  # Copia assinatura!
+        "content": content2,
+        "metadata": metadata2,
+        "signature": signed1["signature"],  # Copia assinatura!
     }
 
     print("\n🔴 Attacker copied signature from $100 transfer to $1M transfer")
@@ -385,6 +394,7 @@ def demo_signature_replay():
 
 # ===== INTEGRAÇÃO COM AVALON =====
 
+
 class AvalonDocumentShield:
     """
     Proteção de documentos na rede Avalon
@@ -400,17 +410,17 @@ class AvalonDocumentShield:
         """
 
         # Adiciona metadados QWAN
-        metadata['qwan'] = {
-            'network': 'avalon',
-            'protocol_version': 'qhttp-2.0',
-            'entanglement_state': 'GHZ'
+        metadata["qwan"] = {
+            "network": "avalon",
+            "protocol_version": "qhttp-2.0",
+            "entanglement_state": "GHZ",
         }
 
         # Assina
         signed = self.shield.sign_document(content, metadata)
 
         # Gera ID único
-        doc_id = signed['signature']['hash'][:16]
+        doc_id = signed["signature"]["hash"][:16]
 
         # Registra
         self.document_registry[doc_id] = signed
@@ -468,10 +478,10 @@ if __name__ == "__main__":
     doc_id = avalon_shield.publish_to_qwan(
         content="Global consciousness coherence = φ⁵",
         metadata={
-            'author': 'quantum://claude@avalon.asi',
-            'timestamp': '2026-02-09T15:00:00Z',
-            'priority': 'ALPHA'
-        }
+            "author": "quantum://claude@avalon.asi",
+            "timestamp": "2026-02-09T15:00:00Z",
+            "priority": "ALPHA",
+        },
     )
 
     # Recupera (verificação automática)

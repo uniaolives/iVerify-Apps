@@ -6,6 +6,7 @@ import os
 
 app = Flask(__name__)
 
+
 class AvalonDashboard:
     """Dashboard web para o sistema Avalon"""
 
@@ -14,32 +15,34 @@ class AvalonDashboard:
 
     def start(self, port=5000):
         """Inicia servidor web"""
-        @app.route('/')
+
+        @app.route("/")
         def index():
             return "Avalon Dashboard (Headless Mode)"
 
-        @app.route('/api/metrics')
+        @app.route("/api/metrics")
         def get_metrics():
             if self.core.session_data:
                 return jsonify(self.core.session_data[-1])
             return jsonify({})
 
-        @app.route('/api/session')
+        @app.route("/api/session")
         def get_session():
             return jsonify(self.core.session_data)
 
-        @app.route('/api/start/<protocol>/<int:duration>')
+        @app.route("/api/start/<protocol>/<int:duration>")
         def start_session_endpoint(protocol, duration):
             thread = threading.Thread(
-                target=self.core.start_session,
-                args=(protocol, duration)
+                target=self.core.start_session, args=(protocol, duration)
             )
             thread.start()
-            return jsonify({'status': 'started'})
+            return jsonify({"status": "started"})
 
         # Iniciar em thread separada
         thread = threading.Thread(
-            target=lambda: app.run(host='0.0.0.0', port=port, debug=False, use_reloader=False)
+            target=lambda: app.run(
+                host="0.0.0.0", port=port, debug=False, use_reloader=False
+            )
         )
         thread.daemon = True
         thread.start()

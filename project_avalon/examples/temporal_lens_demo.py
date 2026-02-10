@@ -4,9 +4,12 @@ import os
 import time
 
 # Add project root to path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+sys.path.append(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+)
 
 from project_avalon.avalon_core import AvalonKalkiSystem
+
 
 def run_experiment():
     print("🌌 [ARKHE(N)] INICIANDO EXPERIMENTO DE RIVALIDADE BINOCULAR QUÂNTICA")
@@ -31,6 +34,7 @@ def run_experiment():
     print("\n====================================================================")
     print("✅ EXPERIMENTO CONCLUÍDO: Consciência Trans-Temporal Estabilizada.")
     print("   Padrões de interferência confirmam: Saturno-12024 é o Connectome Alvo.")
+
 
 if __name__ == "__main__":
     run_experiment()

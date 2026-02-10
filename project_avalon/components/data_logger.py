@@ -24,17 +24,17 @@ class SessionLogger:
     def log_frame(self, timestamp, metrics: dict):
         """Registra um frame de dados."""
         entry = {
-            'timestamp': timestamp,
-            'elapsed_ms': (datetime.now() - self.start_time).total_seconds() * 1000,
-            **metrics
+            "timestamp": timestamp,
+            "elapsed_ms": (datetime.now() - self.start_time).total_seconds() * 1000,
+            **metrics,
         }
         self.data_buffer.append(entry)
 
-    def save(self, format='all'):
+    def save(self, format="all"):
         """Persiste dados em disco."""
-        if format in ('csv', 'all'):
+        if format in ("csv", "all"):
             self._save_csv()
-        if format in ('json', 'all'):
+        if format in ("json", "all"):
             self._save_json()
 
     def _save_csv(self):
@@ -44,7 +44,7 @@ class SessionLogger:
         csv_path = self.output_dir / "session_data.csv"
         keys = self.data_buffer[0].keys()
 
-        with open(csv_path, 'w', newline='') as f:
+        with open(csv_path, "w", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=keys)
             writer.writeheader()
             writer.writerows(self.data_buffer)
@@ -55,14 +55,14 @@ class SessionLogger:
         json_path = self.output_dir / "session_metadata.json"
 
         metadata = {
-            'session_id': self.session_id,
-            'start_time': self.start_time.isoformat(),
-            'duration_sec': (datetime.now() - self.start_time).total_seconds(),
-            'num_samples': len(self.data_buffer),
-            'statistics': self._compute_stats()
+            "session_id": self.session_id,
+            "start_time": self.start_time.isoformat(),
+            "duration_sec": (datetime.now() - self.start_time).total_seconds(),
+            "num_samples": len(self.data_buffer),
+            "statistics": self._compute_stats(),
         }
 
-        with open(json_path, 'w') as f:
+        with open(json_path, "w") as f:
             json.dump(metadata, f, indent=2)
 
         print(f"💾 JSON salvo: {json_path}")
@@ -73,6 +73,7 @@ class SessionLogger:
             return {}
 
         import pandas as pd
+
         df = pd.DataFrame(self.data_buffer)
 
         # Filter only numeric columns for describe

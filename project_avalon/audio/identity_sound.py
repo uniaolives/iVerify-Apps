@@ -3,8 +3,10 @@
 Gerador de Chave Sonora Única (Identity Sound Key)
 Baseado na seed do Arkhe(n) do usuário.
 """
+
 import numpy as np
 from project_avalon.philosophy.arkhe_core import ArkheCore
+
 
 class IdentitySoundGenerator:
     def __init__(self, arkhe: ArkheCore):
@@ -26,7 +28,7 @@ class IdentitySoundGenerator:
         base = self.generate_key_frequency()
         offset = self.generate_binaural_offset()
         return {
-            'fundamental': base,
-            'binaural_pair': (base, base + offset),
-            'harmonics': [base * (1.618**i) for i in range(1, 4)]
+            "fundamental": base,
+            "binaural_pair": (base, base + offset),
+            "harmonics": [base * (1.618**i) for i in range(1, 4)],
         }

@@ -3,14 +3,16 @@
 SENSOR DE IMPEDÂNCIA BIOELÉTRICA PARA MEDIR
 A 'MALEABILIDADE' DO SUBSTRATO NEURAL
 """
+
 import numpy as np
+
 
 class BioelectricImpedanceSensor:
     def __init__(self):
         self.impedance_thresholds = {
-            'rigid': 1000,      # Ohms - substrato rígido (trauma cristalizado)
-            'optimal': 500,     # Ohms - substrato maleável (neuroplasticidade ideal)
-            'chaotic': 100      # Ohms - substrato caótico (alta entropia)
+            "rigid": 1000,  # Ohms - substrato rígido (trauma cristalizado)
+            "optimal": 500,  # Ohms - substrato maleável (neuroplasticidade ideal)
+            "chaotic": 100,  # Ohms - substrato caótico (alta entropia)
         }
 
     def measure_substrate_malleability(self, entropy=0.5, coherence=0.5):
@@ -36,12 +38,14 @@ class BioelectricImpedanceSensor:
         malleability_score = float(np.clip(malleability_score, 0, 1))
 
         return {
-            'impedance': float(simulated_impedance),
-            'malleability_score': malleability_score,
-            'substrate_state': self.classify_substrate_state(malleability_score)
+            "impedance": float(simulated_impedance),
+            "malleability_score": malleability_score,
+            "substrate_state": self.classify_substrate_state(malleability_score),
         }
 
     def classify_substrate_state(self, score):
-        if score > 0.8: return 'OPTIMAL'
-        if score < 0.3: return 'RIGID'
-        return 'CHAOTIC' if score < 0.5 else 'TRANSITIONAL'
+        if score > 0.8:
+            return "OPTIMAL"
+        if score < 0.3:
+            return "RIGID"
+        return "CHAOTIC" if score < 0.5 else "TRANSITIONAL"

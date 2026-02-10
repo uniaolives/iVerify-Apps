@@ -1,18 +1,23 @@
 # audio/low_latency_feedback.py
 import numpy as np
+
 try:
     import sounddevice as sd
+
     SOUNDDEVICE_AVAILABLE = True
 except (ImportError, OSError):
     SOUNDDEVICE_AVAILABLE = False
-    print("Warning: sounddevice or PortAudio not available. Audio feedback will be simulated.")
+    print(
+        "Warning: sounddevice or PortAudio not available. Audio feedback will be simulated."
+    )
+
 
 class AudioEngine:
     """Áudio com latência < 10ms para feedback neural."""
 
     def __init__(self, sample_rate=44100):
         self.sample_rate = sample_rate
-        self.latency = 5.0 # ms
+        self.latency = 5.0  # ms
         self.frequency = 432.0
         self.amplitude = 0.3
         self.stream = None
@@ -36,13 +41,15 @@ class AudioEngine:
             self.frequency = freq
 
     def get_state(self):
-        return {'latency': self.latency}
+        return {"latency": self.latency}
 
     def callback(self, outdata, frames, time, status):
         if status:
             print(status)
         t = (self.phase + np.arange(frames)) / self.sample_rate
-        outdata[:] = self.amplitude * np.sin(2 * np.pi * self.frequency * t).reshape(-1, 1)
+        outdata[:] = self.amplitude * np.sin(2 * np.pi * self.frequency * t).reshape(
+            -1, 1
+        )
         self.phase += frames
 
     def start(self):
@@ -55,7 +62,7 @@ class AudioEngine:
                 channels=1,
                 callback=self.callback,
                 samplerate=self.sample_rate,
-                latency=self.latency/1000.0
+                latency=self.latency / 1000.0,
             )
             self.stream.start()
             print("Audio engine started.")

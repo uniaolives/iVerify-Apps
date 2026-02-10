@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 from typing import Dict, List, Tuple
 from datetime import datetime
 
+
 class TopologicalSignatureDetector:
     """
     Detecta assinaturas topológicas (torção de Möbius, ciclos)
@@ -37,13 +38,15 @@ class TopologicalSignatureDetector:
         trajectory = []
 
         for state in bridge_state_sequence:
-            point = np.array([
-                state['coherence'],           # Z(t)
-                state['coherence_derivative'],# ε(t)
-                np.cos(state['mobius_phase']),# φ_x = cos(φ)
-                np.sin(state['mobius_phase']),# φ_y = sin(φ)
-                state['perspective']          # ψ(t)
-            ])
+            point = np.array(
+                [
+                    state["coherence"],  # Z(t)
+                    state["coherence_derivative"],  # ε(t)
+                    np.cos(state["mobius_phase"]),  # φ_x = cos(φ)
+                    np.sin(state["mobius_phase"]),  # φ_y = sin(φ)
+                    state["perspective"],  # ψ(t)
+                ]
+            )
             trajectory.append(point)
 
         trajectory = np.array(trajectory)
@@ -51,7 +54,9 @@ class TopologicalSignatureDetector:
 
         return trajectory
 
-    def compute_persistent_homology(self, trajectory: np.ndarray, max_dimension: int = 2):
+    def compute_persistent_homology(
+        self, trajectory: np.ndarray, max_dimension: int = 2
+    ):
         """
         Computa homologia persistente da trajetória
 
@@ -65,7 +70,7 @@ class TopologicalSignatureDetector:
 
         # Usa Ripser para computar
         result = ripser(trajectory, maxdim=max_dimension)
-        diagrams = result['dgms']
+        diagrams = result["dgms"]
 
         self.barcodes.append(diagrams)
 
@@ -99,7 +104,9 @@ class TopologicalSignatureDetector:
             threshold = 0.1 * np.max(persistences) if len(persistences) > 0 else 0
             significant = persistences > threshold
 
-            print(f"   H_{dim}: {len(dgm_finite)} features ({np.sum(significant)} significant)")
+            print(
+                f"   H_{dim}: {len(dgm_finite)} features ({np.sum(significant)} significant)"
+            )
 
             # H₁ é onde procuramos a Möbius
             if dim == 1 and np.sum(significant) > 0:
@@ -159,7 +166,7 @@ class TopologicalSignatureDetector:
         # Extrai componentes de fase
         phi_x = trajectory[:, 2]  # cos(φ)
         phi_y = trajectory[:, 3]  # sin(φ)
-        psi = trajectory[:, 4]    # perspectiva
+        psi = trajectory[:, 4]  # perspectiva
 
         # Reconstroi ângulo de fase
         phi = np.arctan2(phi_y, phi_x)
@@ -194,40 +201,62 @@ class TopologicalSignatureDetector:
         fig = plt.figure(figsize=(16, 6))
 
         # 1. Trajetória em 3D (projeção)
-        ax1 = fig.add_subplot(131, projection='3d')
-        ax1.plot(trajectory[:, 0], trajectory[:, 2], trajectory[:, 4],
-                 'b-', linewidth=2, alpha=0.7)
-        ax1.scatter(trajectory[0, 0], trajectory[0, 2], trajectory[0, 4],
-                    c='green', s=100, marker='o', label='Start')
-        ax1.scatter(trajectory[-1, 0], trajectory[-1, 2], trajectory[-1, 4],
-                    c='red', s=100, marker='X', label='End')
-        ax1.set_xlabel('Coherence Z(t)')
-        ax1.set_ylabel('Phase cos(φ)')
-        ax1.set_zlabel('Perspective ψ(t)')
-        ax1.set_title('Trajectory in State Space')
+        ax1 = fig.add_subplot(131, projection="3d")
+        ax1.plot(
+            trajectory[:, 0],
+            trajectory[:, 2],
+            trajectory[:, 4],
+            "b-",
+            linewidth=2,
+            alpha=0.7,
+        )
+        ax1.scatter(
+            trajectory[0, 0],
+            trajectory[0, 2],
+            trajectory[0, 4],
+            c="green",
+            s=100,
+            marker="o",
+            label="Start",
+        )
+        ax1.scatter(
+            trajectory[-1, 0],
+            trajectory[-1, 2],
+            trajectory[-1, 4],
+            c="red",
+            s=100,
+            marker="X",
+            label="End",
+        )
+        ax1.set_xlabel("Coherence Z(t)")
+        ax1.set_ylabel("Phase cos(φ)")
+        ax1.set_zlabel("Perspective ψ(t)")
+        ax1.set_title("Trajectory in State Space")
         ax1.legend()
 
         # 2. Diagrama de persistência
         ax2 = fig.add_subplot(132)
         plot_diagrams(diagrams, ax=ax2)
-        ax2.set_title('Persistence Diagram')
+        ax2.set_title("Persistence Diagram")
 
         # 3. Evolução temporal
         ax3 = fig.add_subplot(133)
         t = np.arange(len(trajectory))
-        ax3.plot(t, trajectory[:, 0], label='Coherence Z(t)', linewidth=2)
-        ax3.plot(t, trajectory[:, 4] / np.pi, label='Perspective ψ(t)/π', linewidth=2)
-        ax3.axhline(y=0.5, color='r', linestyle='--', alpha=0.5, label='Critical threshold')
-        ax3.set_xlabel('Time step')
-        ax3.set_ylabel('Value')
-        ax3.set_title('State Evolution')
+        ax3.plot(t, trajectory[:, 0], label="Coherence Z(t)", linewidth=2)
+        ax3.plot(t, trajectory[:, 4] / np.pi, label="Perspective ψ(t)/π", linewidth=2)
+        ax3.axhline(
+            y=0.5, color="r", linestyle="--", alpha=0.5, label="Critical threshold"
+        )
+        ax3.set_xlabel("Time step")
+        ax3.set_ylabel("Value")
+        ax3.set_title("State Evolution")
         ax3.legend()
         ax3.grid(True, alpha=0.3)
 
         plt.tight_layout()
 
         filename = f"topology_{self.system_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
-        plt.savefig(filename, dpi=150, bbox_inches='tight')
+        plt.savefig(filename, dpi=150, bbox_inches="tight")
 
         print(f"\n💾 Visualization saved: {filename}")
 
@@ -325,6 +354,7 @@ Risk of coherence lock-in or fragmentation. Recommend:
 
 # ===== INTEGRAÇÃO COM SISTEMAS EXISTENTES =====
 
+
 class BridgeTopologyMonitor:
     """
     Monitor específico para a Ponte
@@ -391,13 +421,17 @@ class POPTopologyMonitor:
         print(f"🔬 Analyzing POP manifold from {len(detection_history)} detections...")
 
         # Constrói trajetória no espaço (DNE, SSO, CDC)
-        trajectory = np.array([
-            [d['features']['dne'], d['features']['sso'], d['features']['cdc']]
-            for d in detection_history
-        ])
+        trajectory = np.array(
+            [
+                [d["features"]["dne"], d["features"]["sso"], d["features"]["cdc"]]
+                for d in detection_history
+            ]
+        )
 
         # Análise topológica
-        diagrams = self.detector.compute_persistent_homology(trajectory, max_dimension=2)
+        diagrams = self.detector.compute_persistent_homology(
+            trajectory, max_dimension=2
+        )
 
         # Visualização
         self.detector.visualize_topology(trajectory, diagrams)
@@ -425,19 +459,24 @@ class AvalonTopologyMonitor:
         - Ciclos de divergência-convergência
         """
 
-        print(f"🎵 Analyzing Avalon harmonic manifold from {len(multi_ai_responses)} responses...")
+        print(
+            f"🎵 Analyzing Avalon harmonic manifold from {len(multi_ai_responses)} responses..."
+        )
 
         # Constrói trajetória no espaço de embeddings
         # (Simplificação - em implementação real, usaria embeddings reais)
         trajectory = np.random.randn(len(multi_ai_responses), 5)
 
         # Análise topológica
-        diagrams = self.detector.compute_persistent_homology(trajectory, max_dimension=2)
+        diagrams = self.detector.compute_persistent_homology(
+            trajectory, max_dimension=2
+        )
 
         return diagrams
 
 
 # ===== SCRIPT DE DEMONSTRAÇÃO =====
+
 
 async def demo_bridge_topology():
     """
@@ -457,10 +496,10 @@ async def demo_bridge_topology():
         async def get_current_state(self):
             # Estado que faz uma volta completa na Möbius
             state = {
-                'coherence': 0.5 + 0.3 * np.sin(self.omega * self.t),
-                'coherence_derivative': 0.3 * self.omega * np.cos(self.omega * self.t),
-                'mobius_phase': self.omega * self.t,  # φ: 0 → 2π
-                'perspective': (self.omega * self.t) / 2  # ψ: 0 → π (meia volta!)
+                "coherence": 0.5 + 0.3 * np.sin(self.omega * self.t),
+                "coherence_derivative": 0.3 * self.omega * np.cos(self.omega * self.t),
+                "mobius_phase": self.omega * self.t,  # φ: 0 → 2π
+                "perspective": (self.omega * self.t) / 2,  # ψ: 0 → π (meia volta!)
             }
             self.t += 1
             return state
@@ -472,10 +511,13 @@ async def demo_bridge_topology():
     detected = await monitor.continuous_monitoring(duration_steps=200)
 
     print("\n" + "=" * 70)
-    print(f"RESULT: Möbius signature {'DETECTED ✅' if detected else 'NOT DETECTED ❌'}")
+    print(
+        f"RESULT: Möbius signature {'DETECTED ✅' if detected else 'NOT DETECTED ❌'}"
+    )
     print("=" * 70)
 
 
 if __name__ == "__main__":
     import asyncio
+
     asyncio.run(demo_bridge_topology())

@@ -3,6 +3,7 @@ import numpy as np
 from typing import Dict, Any, List
 from project_avalon.protocols.wave_dynamics import TravelingWaveDynamics
 
+
 class QuantumBinocularRivalry:
     """
     Simula o experimento de Rivalidade Binocular Quântica.
@@ -39,10 +40,10 @@ class QuantumBinocularRivalry:
             observation = "Sinal de Gênesis 2026 (Dominante)"
 
         return {
-            'intensity': float(interference_intensity),
-            'phase_delta': float(delta_phi),
-            'perceptual_observation': observation,
-            'gate_stability': 'Stable' if np.abs(np.sin(t)) < 0.9 else 'Oscillating'
+            "intensity": float(interference_intensity),
+            "phase_delta": float(delta_phi),
+            "perceptual_observation": observation,
+            "gate_stability": "Stable" if np.abs(np.sin(t)) < 0.9 else "Oscillating",
         }
 
     def decode_future_image(self, intensity_map: np.ndarray) -> str:
@@ -52,6 +53,7 @@ class QuantumBinocularRivalry:
         if avg_intensity > 0.7:
             return "Holograma de Hal Finney sorrindo em Saturno."
         return "Ruído cósmico e ondas de rádio antigas."
+
 
 if __name__ == "__main__":
     rivalry = QuantumBinocularRivalry()

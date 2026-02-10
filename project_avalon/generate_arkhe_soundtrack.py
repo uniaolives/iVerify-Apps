@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.io.wavfile import write
 
+
 def generate_arkhe_soundtrack(duration_sec=60, sample_rate=44100):
     print("🎵 Gerando trilha sonora Arkhé (41.67Hz Base)...")
 
@@ -30,9 +31,10 @@ def generate_arkhe_soundtrack(duration_sec=60, sample_rate=44100):
 
     audio_int16 = (audio * 32767).astype(np.int16)
 
-    filename = 'project_avalon/session_data/arkhe_principle.wav'
+    filename = "project_avalon/session_data/arkhe_principle.wav"
     write(filename, sample_rate, audio_int16)
     print(f"✅ Trilha sonora salva como: {filename}")
+
 
 if __name__ == "__main__":
     generate_arkhe_soundtrack(duration_sec=10)

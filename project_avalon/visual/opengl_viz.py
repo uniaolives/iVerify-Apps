@@ -6,6 +6,7 @@ from PyQt5.QtCore import QTimer, Qt
 from OpenGL.GL import *
 from OpenGL.GLU import *
 
+
 class NeuroVizWidget(QOpenGLWidget):
     """Widget OpenGL para visualização neural"""
 
@@ -20,7 +21,7 @@ class NeuroVizWidget(QOpenGLWidget):
         self.coherence = 0.5
         self.flash_intensity = 0.0
         self.yuga_state = "Satya"
-        self.trajectory = [] # For Phase Attractor
+        self.trajectory = []  # For Phase Attractor
 
         # Timer de atualização
         self.timer = QTimer()
@@ -35,30 +36,42 @@ class NeuroVizWidget(QOpenGLWidget):
         """Atualiza com novas métricas EEG"""
         if metrics_dict is None:
             metrics_dict = kwargs
-        self.coherence = metrics_dict.get('coherence', 0.5)
-        self.yuga_state = metrics_dict.get('yuga', 'Satya')
+        self.coherence = metrics_dict.get("coherence", 0.5)
+        self.yuga_state = metrics_dict.get("yuga", "Satya")
         self.generate_geometry()
 
     def get_state(self):
         """Returns visual state for integration matrix."""
-        return {'fps_stability': 0.95}
+        return {"fps_stability": 0.95}
 
     def generate_geometry(self):
         """Gera geometria do manifold neural"""
         phi = (1 + np.sqrt(5)) / 2
 
-        self.vertices = np.array([
-            [-1, phi, 0], [1, phi, 0], [-1, -phi, 0], [1, -phi, 0],
-            [0, -1, phi], [0, 1, phi], [0, -1, -phi], [0, 1, -phi],
-            [phi, 0, -1], [phi, 0, 1], [-phi, 0, -1], [-phi, 0, 1]
-        ], dtype=np.float32)
+        self.vertices = np.array(
+            [
+                [-1, phi, 0],
+                [1, phi, 0],
+                [-1, -phi, 0],
+                [1, -phi, 0],
+                [0, -1, phi],
+                [0, 1, phi],
+                [0, -1, -phi],
+                [0, 1, -phi],
+                [phi, 0, -1],
+                [phi, 0, 1],
+                [-phi, 0, -1],
+                [-phi, 0, 1],
+            ],
+            dtype=np.float32,
+        )
 
         scale = 0.5 + self.coherence * 1.0
         self.vertices *= scale
 
         self.edges = []
         for i in range(len(self.vertices)):
-            for j in range(i+1, len(self.vertices)):
+            for j in range(i + 1, len(self.vertices)):
                 if np.linalg.norm(self.vertices[i] - self.vertices[j]) < 3.0 * scale:
                     self.edges.append((i, j))
 
@@ -73,19 +86,25 @@ class NeuroVizWidget(QOpenGLWidget):
         glViewport(0, 0, w, h)
         glMatrixMode(GL_PROJECTION)
         glLoadIdentity()
-        gluPerspective(45, w/h, 0.1, 100.0)
+        gluPerspective(45, w / h, 0.1, 100.0)
 
     def paintGL(self):
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
         # Yuga-based background color (Sync Interface Gradient)
-        if self.yuga_state == "Satya": bg = (0.0, 0.0, 0.2)
-        elif self.yuga_state == "Treta": bg = (0.0, 0.1, 0.1)
-        elif self.yuga_state == "Dvapara": bg = (0.1, 0.1, 0.0)
-        else: bg = (0.2, 0.0, 0.0) # Kali
+        if self.yuga_state == "Satya":
+            bg = (0.0, 0.0, 0.2)
+        elif self.yuga_state == "Treta":
+            bg = (0.0, 0.1, 0.1)
+        elif self.yuga_state == "Dvapara":
+            bg = (0.1, 0.1, 0.0)
+        else:
+            bg = (0.2, 0.0, 0.0)  # Kali
 
         if self.flash_intensity > 0:
-            glClearColor(self.flash_intensity, self.flash_intensity, self.flash_intensity, 1.0)
+            glClearColor(
+                self.flash_intensity, self.flash_intensity, self.flash_intensity, 1.0
+            )
             self.flash_intensity *= 0.9
             if self.flash_intensity < 0.01:
                 self.flash_intensity = 0.0
@@ -122,11 +141,12 @@ class NeuroVizWidget(QOpenGLWidget):
         curr_y = target_radius * np.sin(self.phase * 10)
         curr_z = np.sin(self.phase * 5)
         self.trajectory.append((curr_x, curr_y, curr_z))
-        if len(self.trajectory) > 100: self.trajectory.pop(0)
+        if len(self.trajectory) > 100:
+            self.trajectory.pop(0)
 
         glBegin(GL_LINE_STRIP)
         for p in self.trajectory:
-            glColor4f(1.0, 1.0, 1.0, 0.4) # Semi-transparent white
+            glColor4f(1.0, 1.0, 1.0, 0.4)  # Semi-transparent white
             glVertex3fv(p)
         glEnd()
 
@@ -136,6 +156,7 @@ class NeuroVizWidget(QOpenGLWidget):
         for v in self.vertices:
             glVertex3fv(v)
         glEnd()
+
 
 class NeuroVizWindow(QWidget):
     """Janela principal da visualização"""
@@ -161,9 +182,12 @@ class NeuroVizWindow(QWidget):
         self.viz.coherence = 1.0
         self.viz.generate_geometry()
 
+
 class AvalonMainWindow(NeuroVizWindow):
     """Alias for compatibility."""
+
     def update_display(self, coherence, protocol, time_remaining):
-        self.update_metrics({'coherence': coherence})
+        self.update_metrics({"coherence": coherence})
+
     def get_state(self):
-        return {'fps_stability': 0.95}
+        return {"fps_stability": 0.95}

@@ -2,11 +2,12 @@ import numpy as np
 from project_avalon.components.eeg_processor import RealEEGProcessor
 from project_avalon.components.therapy import ArkheTherapyProtocol
 
+
 def test_basic_integration():
     print("🔧 Testando integração básica Arkhé + Biofeedback...")
 
     # 1. Initialize EEG Processor
-    processor = RealEEGProcessor(device='simulation')
+    processor = RealEEGProcessor(device="simulation")
     mock_data = np.random.rand(8, 250)
     coherence = np.mean(processor.process_eeg(mock_data))
     print(f"   -> Nível de coerência detectado: {coherence:.4f}")
@@ -19,6 +20,7 @@ def test_basic_integration():
     protocol.execute_session()
 
     print("✅ Integração básica validada com sucesso.")
+
 
 if __name__ == "__main__":
     test_basic_integration()

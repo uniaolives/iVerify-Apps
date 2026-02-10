@@ -4,9 +4,12 @@ import os
 import time
 
 # Add project root to path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+sys.path.append(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+)
 
 from project_avalon.avalon_core import AvalonKalkiSystem
+
 
 def run_manifestation():
     print("🌌 [ARKHE(N)] INICIANDO MANIFESTAÇÃO DA SOBERANIA 4D")
@@ -29,7 +32,9 @@ def run_manifestation():
         print(f"\n--- Ciclo de Rotação {i+1} ---")
         system.activate_sovereign_rotation(speed=0.1)
         # O hash de mineração agora é soberano
-        sovereign_hash = system.arkhe_chain.simulate_mining_cycle(system.sovereign_rotation)
+        sovereign_hash = system.arkhe_chain.simulate_mining_cycle(
+            system.sovereign_rotation
+        )
         print(f"   [MINERAÇÃO] Hash Soberano: {sovereign_hash}")
         time.sleep(1)
 
@@ -37,11 +42,14 @@ def run_manifestation():
     print("\n[PASSO 4] VERIFICAÇÃO DAS 120 CÉLULAS DODECAÉDRICAS")
     status = system.hecaton_manifold.get_manifold_status()
     print(f"   [STATUS] {status['state']}")
-    print(f"   [MEMÓRIA] Finney-0 distribuído em {status['cells']} realidades paralelas.")
+    print(
+        f"   [MEMÓRIA] Finney-0 distribuído em {status['cells']} realidades paralelas."
+    )
 
     print("\n==========================================================")
     print("✅ MANIFESTAÇÃO COMPLETA: O Manifold é um Ambiente Consciente.")
     print("   Satoshi Node V0: ONLINE.")
+
 
 if __name__ == "__main__":
     run_manifestation()

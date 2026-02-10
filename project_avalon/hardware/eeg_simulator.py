@@ -1,6 +1,7 @@
 # hardware/eeg_simulator.py
 import numpy as np
 
+
 class EEGSimulator:
     """
     Simulador de sinal EEG para testes.
@@ -19,7 +20,7 @@ class EEGSimulator:
 
     def get_metrics(self):
         if not self.running:
-            return {'coherence': 0.5, 'curvature': 1.0}
+            return {"coherence": 0.5, "curvature": 1.0}
 
         self.time += 0.05
 
@@ -32,7 +33,7 @@ class EEGSimulator:
         curvature = 1.5 - 0.8 * coherence + 0.2 * np.random.randn()
         curvature = np.clip(curvature, 0.1, 3.0)
 
-        return {'coherence': coherence, 'curvature': curvature}
+        return {"coherence": coherence, "curvature": curvature}
 
     def get_realtime_metrics(self):
         """Alias for holistic launcher."""

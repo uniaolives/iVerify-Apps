@@ -3,6 +3,7 @@ from scipy.linalg import eigh
 from scipy.io.wavfile import write
 from scipy.ndimage import gaussian_filter
 
+
 def generate_healing_sound(duration_sec=20, sample_rate=44100):
     print("Initializing Quantum Audio Synthesis...")
 
@@ -19,7 +20,7 @@ def generate_healing_sound(duration_sec=20, sample_rate=44100):
     audio_buffer = []
 
     # 3. Definir os Estados (Doente -> Saudável)
-    V_sick = 0.5 * 0.1 * x**2 - 10 * np.exp(-(x - 1)**2 / 0.5)
+    V_sick = 0.5 * 0.1 * x**2 - 10 * np.exp(-((x - 1) ** 2) / 0.5)
     V_current = V_sick.copy()
 
     print("Processing Ricci Flow Evolution...")
@@ -36,10 +37,10 @@ def generate_healing_sound(duration_sec=20, sample_rate=44100):
 
         evals, _ = eigh(H, subset_by_index=[0, 5])
 
-        base_freq = 200 # Hz
+        base_freq = 200  # Hz
         freqs = base_freq + (evals - evals[0]) * 150
 
-        t = np.linspace(0, 1/frame_rate, samples_per_frame, endpoint=False)
+        t = np.linspace(0, 1 / frame_rate, samples_per_frame, endpoint=False)
         frame_audio = np.zeros(samples_per_frame)
 
         envelope = np.ones_like(t)
@@ -71,5 +72,6 @@ def generate_healing_sound(duration_sec=20, sample_rate=44100):
     write(filename, sample_rate, full_audio_int16)
     print(f"\nDONE. Audio file saved as: {filename}")
 
+
 if __name__ == "__main__":
-    generate_healing_sound(duration_sec=5) # Reduced for quick test
+    generate_healing_sound(duration_sec=5)  # Reduced for quick test

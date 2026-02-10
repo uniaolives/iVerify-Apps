@@ -2,6 +2,7 @@ import numpy as np
 import time
 from project_avalon.components.visualizer import TimeCrystalVisualizer
 
+
 class ArkheTherapyProtocol:
     """Sessão terapêutica baseada no princípio primordial"""
 

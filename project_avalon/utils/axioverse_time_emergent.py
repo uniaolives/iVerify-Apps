@@ -5,6 +5,7 @@ from scipy.special import gamma
 import qutip as qt
 import matplotlib.pyplot as plt
 
+
 class FractalPageWootters:
     """
     Implementation of Page-Wootters time emergence
@@ -15,7 +16,7 @@ class FractalPageWootters:
         # Axion parameters (eV units)
         self.m_a = m_a  # Axion mass
         self.f_a = f_a  # Decay constant
-        self.D = D      # Fractal dimension (2 < D < 3)
+        self.D = D  # Fractal dimension (2 < D < 3)
 
         # Clock (axion field as harmonic oscillator)
         self.N_levels = 100  # Truncated Hilbert space
@@ -28,7 +29,7 @@ class FractalPageWootters:
         # Total constraint: H_total |Psi> = 0
         self.H_total = self._build_total_hamiltonian()
         self.psi_total = None
-        self.clock_time = 0 # Default clock time
+        self.clock_time = 0  # Default clock time
 
     def _create_system_hamiltonian(self):
         """Create Hamiltonian for matter fields (simplified)"""
@@ -96,7 +97,7 @@ class FractalPageWootters:
         """
         # Fractal time dilation factor
         beta = 3 - self.D
-        dilation_factor = scale_ratio ** beta
+        dilation_factor = scale_ratio**beta
 
         # Effective time experienced at this scale
         effective_time = self.clock_time / dilation_factor
@@ -116,9 +117,11 @@ class FractalPageWootters:
 
         # Modular flow: O(τ) = e^{iKτ} O e^{-iKτ}
         beta = 3 - self.D
-        effective_tau = self.clock_time * (scale ** beta)
+        effective_tau = self.clock_time * (scale**beta)
 
-        U = (1j * K * effective_tau).expm() # Corrected from -1j to 1j for evolution or check sign
+        U = (
+            1j * K * effective_tau
+        ).expm()  # Corrected from -1j to 1j for evolution or check sign
         O_tau = U * observable * U.dag()
 
         return O_tau
@@ -130,7 +133,7 @@ class FractalPageWootters:
         for L_ratio in scales:
             # Create subsystem at scale L
             beta = 3 - self.D
-            effective_dim = self.D * (L_ratio ** beta)
+            effective_dim = self.D * (L_ratio**beta)
 
             # Entanglement entropy follows area law in effective dimension
             S = (L_ratio ** (effective_dim - 1)) * np.log(2)
@@ -138,7 +141,9 @@ class FractalPageWootters:
 
         return np.array(entropies)
 
+
 # ============== VISUALIZATION & ANALYSIS ==============
+
 
 def plot_fractal_time_dilation(D_values=np.linspace(2.1, 2.9, 5)):
     """Visualize how time flows differently in different fractal dimensions"""
@@ -149,46 +154,55 @@ def plot_fractal_time_dilation(D_values=np.linspace(2.1, 2.9, 5)):
 
     for D in D_values:
         beta = 3 - D
-        dilation = scales ** beta
+        dilation = scales**beta
 
-        plt.loglog(scales, dilation, label=f'D = {D:.2f}', linewidth=2)
+        plt.loglog(scales, dilation, label=f"D = {D:.2f}", linewidth=2)
 
-    plt.xlabel('Scale Ratio (L/L₀)', fontsize=14)
-    plt.ylabel('Time Dilation Factor (τ/t)', fontsize=14)
-    plt.title('Fractal Time Dilation: How Time Flows at Different Scales', fontsize=16)
+    plt.xlabel("Scale Ratio (L/L₀)", fontsize=14)
+    plt.ylabel("Time Dilation Factor (τ/t)", fontsize=14)
+    plt.title("Fractal Time Dilation: How Time Flows at Different Scales", fontsize=16)
     plt.grid(True, alpha=0.3)
     plt.legend()
     plt.tight_layout()
 
     # Add physical interpretations
-    plt.annotate('Quantum foam: time flows faster',
-                 xy=(1e-3, 10), xytext=(1e-2, 20),
-                 arrowprops=dict(arrowstyle='->'), fontsize=12)
+    plt.annotate(
+        "Quantum foam: time flows faster",
+        xy=(1e-3, 10),
+        xytext=(1e-2, 20),
+        arrowprops=dict(arrowstyle="->"),
+        fontsize=12,
+    )
 
-    plt.annotate('Cosmic scales: time flows slower',
-                 xy=(1e3, 0.1), xytext=(1e2, 0.5),
-                 arrowprops=dict(arrowstyle='->'), fontsize=12)
+    plt.annotate(
+        "Cosmic scales: time flows slower",
+        xy=(1e3, 0.1),
+        xytext=(1e2, 0.5),
+        arrowprops=dict(arrowstyle="->"),
+        fontsize=12,
+    )
 
     return plt
+
 
 def analyze_axion_clock_frequencies():
     """Show how axion mass determines cosmic clock frequency"""
     # Known axion mass ranges
     axion_types = {
-        'QCD Axion': (1e-6, 1e-3),  # eV
-        'Ultralight': (1e-22, 1e-10),
-        'String Axiverse': (1e-33, 1e-10),
+        "QCD Axion": (1e-6, 1e-3),  # eV
+        "Ultralight": (1e-22, 1e-10),
+        "String Axiverse": (1e-33, 1e-10),
     }
 
     fig, axes = plt.subplots(2, 1, figsize=(12, 10))
 
     # Plot mass ranges
     for idx, (name, (m_min, m_max)) in enumerate(axion_types.items()):
-        axes[0].semilogx([m_min, m_max], [idx, idx], 'o-', linewidth=3, label=name)
+        axes[0].semilogx([m_min, m_max], [idx, idx], "o-", linewidth=3, label=name)
 
-    axes[0].set_xlabel('Axion Mass (eV)', fontsize=14)
-    axes[0].set_ylabel('Axion Type', fontsize=14)
-    axes[0].set_title('Axion Mass Ranges', fontsize=16)
+    axes[0].set_xlabel("Axion Mass (eV)", fontsize=14)
+    axes[0].set_ylabel("Axion Type", fontsize=14)
+    axes[0].set_title("Axion Mass Ranges", fontsize=16)
     axes[0].legend()
     axes[0].grid(True, alpha=0.3)
 
@@ -200,22 +214,26 @@ def analyze_axion_clock_frequencies():
     periods_seconds = periods * 6.6e-16
 
     axes[1].loglog(masses, periods_seconds, linewidth=3)
-    axes[1].set_xlabel('Axion Mass (eV)', fontsize=14)
-    axes[1].set_ylabel('Oscillation Period (seconds)', fontsize=14)
-    axes[1].set_title('Axion Clock Frequency vs Mass', fontsize=16)
+    axes[1].set_xlabel("Axion Mass (eV)", fontsize=14)
+    axes[1].set_ylabel("Oscillation Period (seconds)", fontsize=14)
+    axes[1].set_title("Axion Clock Frequency vs Mass", fontsize=16)
     axes[1].grid(True, alpha=0.3)
 
     # Add reference lines
-    axes[1].axhline(1, color='red', linestyle='--', alpha=0.5, label='1 second')
-    axes[1].axhline(3.16e7, color='orange', linestyle='--', alpha=0.5, label='1 year')
-    axes[1].axhline(3.16e16, color='green', linestyle='--', alpha=0.5, label='1 billion years')
+    axes[1].axhline(1, color="red", linestyle="--", alpha=0.5, label="1 second")
+    axes[1].axhline(3.16e7, color="orange", linestyle="--", alpha=0.5, label="1 year")
+    axes[1].axhline(
+        3.16e16, color="green", linestyle="--", alpha=0.5, label="1 billion years"
+    )
 
     axes[1].legend()
 
     plt.tight_layout()
     return fig
 
+
 # ============== THE MASTER EQUATION ==============
+
 
 def derive_master_equation():
     """
@@ -265,7 +283,9 @@ def derive_master_equation():
 
     return equation_text
 
+
 # ============== SIMULATION: TIME EMERGENCE ==============
+
 
 def simulate_time_emergence():
     """Simulate how time emerges from the timeless state"""
@@ -285,7 +305,7 @@ def simulate_time_emergence():
     # 2. Extract "time" by conditioning on clock
     print("\n2. Extracting time evolution by conditioning on clock...")
 
-    times = np.linspace(0, 2*np.pi/fpw.m_a, 10)  # One full oscillation
+    times = np.linspace(0, 2 * np.pi / fpw.m_a, 10)  # One full oscillation
     system_states = []
 
     for t in times:
@@ -318,7 +338,9 @@ def simulate_time_emergence():
 
     return fpw, system_states
 
+
 # ============== PREDICTIONS & TESTS ==============
+
 
 def experimental_predictions():
     """Experimental signatures of this model"""
@@ -327,26 +349,27 @@ def experimental_predictions():
         {
             "prediction": "Scale-dependent time dilation",
             "test": "Compare atomic clock rates at different scales (nanoscale vs cosmic)",
-            "signature": "Subtle deviations from standard quantum mechanics at small scales"
+            "signature": "Subtle deviations from standard quantum mechanics at small scales",
         },
         {
             "prediction": "Axion mass sets fundamental clock rate",
             "test": "Look for correlations between measured time standards and axion searches",
-            "signature": "Unexplained periodicities in precision timing experiments"
+            "signature": "Unexplained periodicities in precision timing experiments",
         },
         {
             "prediction": "Fractal dimension affects time flow",
             "test": "Measure time dilation in systems with different effective dimensionality",
-            "signature": "Time flows differently in 2D materials vs 3D bulk"
+            "signature": "Time flows differently in 2D materials vs 3D bulk",
         },
         {
             "prediction": "Entanglement creates time flow",
             "test": "Monitor how decoherence affects time perception in quantum systems",
-            "signature": "Isolated quantum systems show different thermalization timescales"
-        }
+            "signature": "Isolated quantum systems show different thermalization timescales",
+        },
     ]
 
     return predictions
+
 
 # ============== EXECUTION ==============
 

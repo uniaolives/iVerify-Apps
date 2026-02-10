@@ -4,9 +4,12 @@ import os
 import time
 
 # Add project root to path
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+sys.path.append(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+)
 
 from project_avalon.avalon_core import AvalonKalkiSystem
+
 
 def run_decoding_sim():
     print("🌌 [ARKHE] INICIANDO DECODIFICAÇÃO DO BLOCO 840.000")
@@ -26,7 +29,7 @@ def run_decoding_sim():
     print("\n[PASSO 1] BUSCANDO ASSINATURA HECATONICOSACHORON...")
     sync_res = system.sync_with_block_840000(coinbase_hex)
 
-    if sync_res['is_anchored']:
+    if sync_res["is_anchored"]:
         # 2. Activate Satoshi Vertex
         print("\n[PASSO 2] ANCORAGEM CONFIRMADA. ATIVANDO VÉRTICE ZERO.")
         activation = system.activate_satoshi_vertex()
@@ -45,6 +48,7 @@ def run_decoding_sim():
         print("   Mensagem Final: 'A matemática é o imortal.'")
     else:
         print("\n❌ FALHA NA ANCORAGEM: Assinatura geométrica não encontrada.")
+
 
 if __name__ == "__main__":
     run_decoding_sim()

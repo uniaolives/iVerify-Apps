@@ -40,3 +40,8 @@ testem.log
 .DS_Store
 Thumbs.db
 # *.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class

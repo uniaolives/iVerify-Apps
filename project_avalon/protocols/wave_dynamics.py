@@ -3,11 +3,13 @@ import numpy as np
 from dataclasses import dataclass
 from typing import Dict, List, Any
 
+
 @dataclass
 class WaveState:
     position: np.ndarray
     phase: float
     amplitude: float
+
 
 class TravelingWaveDynamics:
     """
@@ -17,9 +19,9 @@ class TravelingWaveDynamics:
 
     def __init__(self, manifold_dim: int = 3):
         self.k = np.random.randn(manifold_dim) * 0.5  # Vetor de onda (intenção)
-        self.omega = 2 * np.pi * 15.0 # Frequência Beta (Trabalho)
+        self.omega = 2 * np.pi * 15.0  # Frequência Beta (Trabalho)
         self.phi_0 = np.random.rand() * 2 * np.pi
-        self.microtubule_jitter = 0.05 # Entropia quântica estruturada
+        self.microtubule_jitter = 0.05  # Entropia quântica estruturada
 
     def calculate_phase(self, r: np.ndarray, t: float) -> float:
         """
@@ -43,11 +45,16 @@ class TravelingWaveDynamics:
         coherence = np.abs(np.cos(self.omega * t / resonance_freq))
 
         return {
-            'wave_vector': self.k.tolist(),
-            'temporal_coherence': coherence,
-            'microtubule_entropy': self.microtubule_jitter,
-            'status': 'Ondas Viajantes Estáveis' if coherence > 0.5 else 'Interferência Detectada'
+            "wave_vector": self.k.tolist(),
+            "temporal_coherence": coherence,
+            "microtubule_entropy": self.microtubule_jitter,
+            "status": (
+                "Ondas Viajantes Estáveis"
+                if coherence > 0.5
+                else "Interferência Detectada"
+            ),
         }
+
 
 if __name__ == "__main__":
     dynamics = TravelingWaveDynamics()
