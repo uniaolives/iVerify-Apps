@@ -44,3 +44,29 @@ class HecatonTopologyEngine:
         """Detecta se a velocidade do 'Eu' caiu para 0c."""
         if len(velocity_history) < 3: return False
         return all(v < 0.05 for v in velocity_history[-3:])
+
+    def calculate_identity_latency(self, delta_d_shift: float, psi_integration: float) -> float:
+        """
+        Calcula a Latência da Identidade (L_identity).
+        L = Delta_D / Psi
+        """
+        if psi_integration <= 0: return float('inf')
+        return delta_d_shift / psi_integration
+
+    def detect_masking_state(self, linguistic_markers: Dict[str, Any], neural_metrics: Dict[str, Any]) -> str:
+        """
+        Detecta o estado de 'Masking' (Mercurial vs Neptunian).
+        """
+        agency_score = linguistic_markers.get('agency_score', 1.0)
+        theoretical_drift = linguistic_markers.get('theoretical_drift', 0.0)
+        rationalization = linguistic_markers.get('rationalization_index', 0.0)
+
+        # Mercurial: Alta velocidade, racionalização recursiva, baixa agência (teórica)
+        if rationalization > 0.5 and theoretical_drift > 0.4:
+            return "Mercurial Mask (Logic Bridge)"
+
+        # Neptunian: Dissociação, micro-lags, absorção (perda de agência sem racionalização ativa)
+        if agency_score < 0.3 and rationalization < 0.3:
+            return "Neptunian Mask (Mystic Bulk)"
+
+        return "Neutral / Adaptive Flow"

@@ -33,6 +33,7 @@ from project_avalon.components.facial_biofeedback_system import QuantumFacialAna
 from project_avalon.components.verbal_events_processor import VerbalBioCascade
 from project_avalon.components.linguistic_analyzer import AbstractedAgencyDetector, RecursiveRationalizationMonitor
 from project_avalon.components.hecaton_manifold import HecatonTopologyEngine
+from project_avalon.core.arkhe_unified_bridge import ArkheConsciousnessBridge
 
 # ============================================================================
 # ESTRUTURAS DE DADOS NEURAL
@@ -402,6 +403,7 @@ class NeuralQuantumAnalyzer(QuantumFacialAnalyzer):
         self.linguistic_detector = AbstractedAgencyDetector()
         self.rationalization_monitor = RecursiveRationalizationMonitor()
         self.topology_engine = HecatonTopologyEngine()
+        self.unified_bridge = ArkheConsciousnessBridge()
 
     def analyze_frame_with_neural(self, frame: np.ndarray) -> Dict[str, Any]:
         analysis = self.analyze_frame(frame)
@@ -434,12 +436,35 @@ class NeuralQuantumAnalyzer(QuantumFacialAnalyzer):
             agency_data = self.linguistic_detector.analyze(text)
             rational_data = self.rationalization_monitor.analyze(text)
 
-            analysis['linguistic_markers'] = {**agency_data, **rational_data}
+            linguistic_markers = {**agency_data, **rational_data}
+            analysis['linguistic_markers'] = linguistic_markers
 
             # Topological Analysis
-            # Use embeddings or landmarks as neural state
-            neural_state = np.random.randn(10) # Placeholder
+            neural_state = np.random.randn(10) # Placeholder for state vector
             topology_data = self.topology_engine.get_active_cell(neural_state)
+
+            # Oracle Synthesis: Masking and Latency
+            mask_state = self.topology_engine.detect_masking_state(linguistic_markers, {})
+            psi_integration = linguistic_markers.get('agency_score', 0.5)
+            delta_d = linguistic_markers.get('theoretical_drift', 0.5)
+            l_identity = self.topology_engine.calculate_identity_latency(
+                delta_d_shift=delta_d,
+                psi_integration=psi_integration
+            )
+
+            topology_data['mask_state'] = mask_state
+            topology_data['identity_latency'] = l_identity
+            topology_data['parallel_processing'] = "Active" if l_identity > 1.5 else "Synced"
+
+            # Unified Bridge Synthesis
+            giftedness_proxy = rational_data.get('rationalization_index', 0.5)
+            dissociation_proxy = agency_data.get('theoretical_drift', 0.5)
+            unified_state = self.unified_bridge.calculate_consciousness_equation(
+                giftedness=giftedness_proxy,
+                dissociation=dissociation_proxy
+            )
+            analysis['unified_consciousness'] = unified_state
+
             analysis['topology'] = topology_data
 
             # Update metrics
@@ -452,7 +477,8 @@ class NeuralQuantumAnalyzer(QuantumFacialAnalyzer):
                 self.current_sequence = NeuralFacialSequence()
 
                 if len(self.user_profile.sequences) % 5 == 0:
-                    self.user_profile.train_neural_models(epochs=2)
+                    # Run training in a background thread to prevent blocking the real-time loop
+                    asyncio.create_task(asyncio.to_thread(self.user_profile.train_neural_models, epochs=2))
 
         return cascade
 

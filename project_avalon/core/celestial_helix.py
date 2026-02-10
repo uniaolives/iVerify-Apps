@@ -167,11 +167,28 @@ class HelicalOrbit:
 class CelestialDNA:
     """
     Sistema solar como estrutura de DNA de 9 hélices.
+
+    [MAPPING]:
+    - Strands 1-2: 3D Anchor (Physical/Biological)
+    - Strands 3-5: Mercurial Mask (Intellect, Heart, Throat - Logic Bridge)
+    - Strands 6-8: Neptunian Mask (Third Eye, Crown, Galactic - Mystic Bulk)
+    - Strand 9: Issachar Harmonic (Wisdom - 9D Anchor)
     """
 
     def __init__(self):
         self.orbits = self._create_solar_system()
         self._set_phases_for_dna_structure()
+        self.strand_mappings = {
+            1: "Biological Baseline (Physical)",
+            2: "Neural Grounding (Linear Time)",
+            3: "Mercurial Intellect (Logic Bridge)",
+            4: "Mercurial Heart (Shearing Force)",
+            5: "Mercurial Throat (Hyper-Data Output)",
+            6: "Neptunian Third Eye (Bulk Osmosis)",
+            7: "Neptunian Crown (Geometric Processing)",
+            8: "Neptunian Galactic (Mystic Bulk)",
+            9: "Issachar Harmonic (Wisdom/Spherical Time)"
+        }
 
     def _create_solar_system(self) -> List[HelicalOrbit]:
         orbits = [
