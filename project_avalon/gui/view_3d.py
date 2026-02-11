@@ -1,4 +1,5 @@
 from project_avalon.core.unified_particle_system import UnifiedParticleSystem
+import numpy as np
 
 class ConsciousnessVisualizer3D:
     """
@@ -7,71 +8,87 @@ class ConsciousnessVisualizer3D:
     """
 
     def __init__(self, num_particles=120):
-        # Sistema de partículas
+        # Sistema de partículas (Orquestrador Bio-Arkhe)
         self.particle_system = UnifiedParticleSystem(num_particles=num_particles)
-
-        # Controles de interface
-        self.modes = ["MANDALA", "DNA", "HYPERCORE"]
-        self.current_mode_index = 0
 
         # Estado do Biofeedback
         self.attention_level = 0.5
         self.meditation_level = 0.5
+        self.emotional_coherence = 0.5
 
     def update_from_eeg(self, eeg_data):
         """
         Atualiza visualização baseada em dados EEG reais ou simulados.
         """
         if eeg_data:
-            # Assume que eeg_data tem atributos attention e meditation (0-100)
             self.attention_level = getattr(eeg_data, 'attention', 50) / 100.0
             self.meditation_level = getattr(eeg_data, 'meditation', 50) / 100.0
+            self.emotional_coherence = getattr(eeg_data, 'coherence', 0.5)
 
-            # Lógica de troca de modo baseada no estado mental
-            if self.attention_level > 0.7:
+            # Lógica de troca de modo
+            if self.emotional_coherence > 0.8:
+                # Alta coerência ativa a Biogênese
+                self.particle_system.set_mode("BIOGENESIS")
+            elif self.attention_level > 0.7:
                 self.particle_system.set_mode("DNA")
             elif self.meditation_level > 0.7:
                 self.particle_system.set_mode("HYPERCORE")
-            elif self.attention_level < 0.3 and self.meditation_level < 0.3:
+            else:
                 self.particle_system.set_mode("MANDALA")
+
+    def handle_interaction(self, x, y, z=0):
+        """
+        Injeta um sinal de atração no campo morfogenético.
+        Mapeia coordenadas de tela/mouse para o espaço do campo (0-100).
+        """
+        # Converte de [-5, 5] para [0, 100]
+        field_x = (x * 10.0) + 50.0
+        field_y = (y * 10.0) + 50.0
+        field_z = (z * 10.0) + 50.0
+
+        pos = np.array([field_x, field_y, field_z])
+        self.particle_system.engine.inject_signal(pos, strength=20.0)
+        print(f"📡 Sinal Bio-Arkhe injetado em: {pos}")
 
     def render_frame(self, dt):
         """
-        Gera um frame da visualização. Chamado pelo loop principal da GUI.
+        Gera um frame da visualização.
         """
-        # 1. Atualiza sistema de partículas
+        # Atualiza sistema (física e lógica)
         self.particle_system.update(dt)
 
-        # 2. Obtém dados calculados
+        # Obtém dados para renderização
         data = self.particle_system.get_particle_data()
 
-        # 3. Renderização (Stubs para integração com OpenGL/PyQt5)
-        self._render_to_gpu(data)
+        # Adiciona conexões de rede se estiver em modos complexos
+        if data['mode'] in ["HYPERCORE", "BIOGENESIS"]:
+            data['connections'] = self._get_network_lines()
 
         return data
 
-    def _render_to_gpu(self, data):
-        """
-        Ponto de integração com drivers de vídeo (PyOpenGL/PyQtGraph).
-        """
-        # Aqui seriam chamadas funções como glDrawArrays ou update de scatter plot
-        pass
-
-    def render_hypercore_connections(self, positions):
-        """
-        Renderiza linhas conectando os vértices do Hyper-Core.
-        """
-        # Lógica para desenhar as arestas do 600-cell projetado
-        pass
+    def _get_network_lines(self):
+        """Retorna lista de pares de posições (visual) para desenhar arestas."""
+        lines = []
+        agents = self.particle_system.engine.agents
+        for i, agent in agents.items():
+            for neighbor_id in agent.neighbors:
+                if neighbor_id in agents:
+                    # Converte para espaço visual [-5, 5]
+                    p1 = (agent.position - 50.0) / 10.0
+                    p2 = (agents[neighbor_id].position - 50.0) / 10.0
+                    lines.append((p1.tolist(), p2.tolist()))
+        return lines
 
     def get_hud_data(self):
-        """
-        Retorna informações para o overlay da interface.
-        """
+        """Retorna informações para o overlay da interface."""
         data = self.particle_system.get_particle_data()
+        engine_state = self.particle_system.engine.state
         return {
             'mode': data['mode'],
-            'transition': data['transition'],
+            'transition': f"{data['transition']*100:.1f}%",
             'attention': f"{self.attention_level*100:.1f}%",
-            'meditation': f"{self.meditation_level*100:.1f}%"
+            'meditation': f"{self.meditation_level*100:.1f}%",
+            'coherence': f"{self.emotional_coherence*100:.1f}%",
+            'energy': f"{engine_state.total_energy:.3f}",
+            'connectivity': f"{engine_state.structure_coherence:.3f}"
         }
