@@ -5,6 +5,7 @@ Encoding consciousness states into fundamental geometric archetypes.
 
 import numpy as np
 from typing import Dict, List, Optional, Any
+from scipy.ndimage import rotate
 
 class SacredGeometryEncoder:
     def __init__(self):
